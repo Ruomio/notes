@@ -211,3 +211,137 @@ doc/.txt# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 >         测试报告                               : 48h
 > ```
 > ````
+
+
+
+# Make
+
+## clean
+
+> **make** clean 清除之前编译的可执行文件及配置文件。
+> **make** **distclean** 清除所有生成的文件。
+
+# hexo
+
+##  命令
+
+hexo clean 清除缓存
+
+hexo (d)eploy  部署
+
+hexo (g)ene
+
+hexo d -g 同步到gitihub
+
+# docker
+
+## 备份和恢复mysql数据
+
+单数据库
+
+> ```shell
+> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 test' > /home/mysql/backup/emp_`date +\%F`.sql;
+> ```
+
+多数据库
+
+> ```shell
+> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 --databases test' > /home/mysql/backup/emp_`date +\%F`.sql;
+> ```
+
+全数据库
+
+> ```shell
+> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 --all-databases ' > /home/mysql/backup/emp_`date +\%F`.sql;
+> ```
+
+**还原：**
+
+> 1. 进入mysql容器, 并选择数据库
+>
+> 2. ```shell
+>    source /var/backup/emp_2023-01-13.sql
+>    ```
+
+## 复制到容器 
+
+1.  从本机到容器
+
+> docker cp
+>
+> $ docker cp new_file.txt 0c57de10362b:/usr/share
+
+1. 从容器到容器
+
+> docker volum 
+>
+> $ docker volume create volume_one
+>
+> $ docker volume ls
+>
+> $ docker run -d -v volume_one:/app nginx:latest
+>
+> $ docker inspect f2457d3eb8fe
+>
+> `docker volume` 命令的优点之一是创建与多个容器共享的单个目录。
+
+# ffmpeg
+
+## 主要参数
+
+| 参数         | 说明                               |
+| ------------ | ---------------------------------- |
+| -version     | 显示版本。                         |
+| -formats     | 显示可用的格式（包括设备）。       |
+| -demuxers    | 显示可用的demuxers。               |
+| -muxers      | 显示可用的muxers。                 |
+| -devices     | 显示可用的设备。                   |
+| -codecs      | 显示libavcodec已知的所有编解码器。 |
+| -decoders    | 显示可用的解码器。                 |
+| -encoders    | 显示所有可用的编码器。             |
+| -bsfs        | 显示可用的比特流filter。           |
+| -protocols   | 显示可用的协议。                   |
+| -filters     | 显示可用的libavfilter过滤器。      |
+| -pix_fmts    | 显示可用的像素格式。               |
+| -sample_fmts | 显示可用的采样格式。               |
+| -layouts     | 显示channel名称和标准channel布局。 |
+| -colors      | 显示识别的颜色名称。               |
+
+## 视频参数
+
+| 参数                                                | 说明                                                         |
+| --------------------------------------------------- | ------------------------------------------------------------ |
+| -vframesnum（输出）                                 | 设置要输出的视频帧的数量。对于-frames：v，这是一个过时的别名，您应该使用它。 |
+| -r [：stream_specifier] fps（输入/输出，每个流）    | 设置帧率（Hz值，分数或缩写）。作为输入选项，忽略存储在文件中的任何时间戳，根据速率生成新的时间戳。这与用于-framerate选项不同（它在FFmpeg的旧版本中使用的是相同的）。如果有疑问，请使用-framerate而不是输入选项-r。作为输出选项，复制或丢弃输入帧以实现恒定输出帧频fps。 |
+| -s [：stream_specifier]大小（输入/输出，每个流）    | 设置窗口大小。作为输入选项，这是video_size专用选项的快捷方式，由某些分帧器识别，其帧尺寸未被存储在文件中。作为输出选项，这会将缩放视频过滤器插入到相应过滤器图形的末尾。请直接使用比例过滤器将其插入到开头或其他地方。格式是’wxh’（默认 - 与源相同）。 |
+| -aspect [：stream_specifier] 宽高比（输出，每个流） | 设置方面指定的视频显示宽高比。aspect可以是浮点数字符串，也可以是num：den形式的字符串，其中num和den是宽高比的分子和分母。例如“4：3”，“16：9”，“1.3333”和“1.7777”是有效的参数值。如果与-vcodec副本一起使用，则会影响存储在容器级别的宽高比，但不会影响存储在编码帧中的宽高比（如果存在）。 |
+| -vn（输出）                                         | 禁用视频录制。                                               |
+| -vcodec编解码器（输出）                             | 设置视频编解码器。这是-codec：v的别名。                      |
+| -vffiltergraph（输出）                              | 创建由filtergraph指定的过滤器图，并使用它来过滤流。          |
+
+## 音频参数
+
+| 参数                                                        | 说明                                                         |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| -aframes（输出）                                            | 设置要输出的音频帧的数量。这是-frames：a的一个过时的别名。   |
+| -ar [：stream_specifier] freq（输入/输出，每个流）          | 设置音频采样频率。对于输出流，它默认设置为相应输入流的频率。对于输入流，此选项仅适用于音频捕获设备和原始分路器，并映射到相应的分路器选件。 |
+| -ac [：stream_specifier]通道（输入/输出，每个流）           | 设置音频通道的数量。对于输出流，它默认设置为输入音频通道的数量。对于输入流，此选项仅适用于音频捕获设备和原始分路器，并映射到相应的分路器选件。 |
+| -an（输出）                                                 | 禁用录音。                                                   |
+| -acodec编解码器（输入/输出）                                | 设置音频编解码器。这是-codec的别名：a。                      |
+| -sample_fmt [：stream_specifier] sample_fmt（输出，每个流） | 设置音频采样格式。使用-sample_fmts获取支持的样本格式列表。   |
+| -affiltergraph（输出）                                      | 创建由filtergraph指定的过滤器图，并使用它来过滤流。          |
+
+## 例子
+
+>  ffmpeg [global_options] {[input_file_options] -iinput_url} ...
+>                          {[output_file_options] output_url} ...
+
+```shell
+# 导出音频并指定起始位置
+ffmpeg -i src.mp4 -i -ss %h:%m:%m.%ms -t %h:%m:%m.%ms  -vn -y out.mp3
+# 合并音视频
+ffmpeg -i test.mp4 -i test.mp3 -c copy out.mp4
+```
+
+
+

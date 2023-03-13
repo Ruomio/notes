@@ -125,6 +125,15 @@ $ nmcli device wifi connect "OpenWrt" password 00000000
 Device 'wlp58s0' successfully activated with '180a3ce4-ba1f-405a-94f1-684e538a7be9'.
 ```
 
+但是隐藏了SSID的则需要额外操作，如下：
+
+```
+nmcli c add type wifi con-name "自定义连接名称" ifname "无线网卡名称" ssid "WiFi的名字"
+nmcli con modify "自定义连接名称" wifi-sec.key-mgmt wpa-psk
+nmcli con modify "自定义连接名称" wifi-sec.psk "WiFi的密码"
+nmcli con up "自定义连接名称"
+```
+
 ## 查看端口
 
 netstat -anp | grep 端口号
@@ -356,67 +365,15 @@ scp -p 22 {本地文件} Linux用户名@ip地址:Linux绝对路径
 去掉指定端口号参数-p, 并将上述路径舒徐调换即可
 ```
 
-# tools
+## ln 软链接
 
-## hexo 部署博客
+ln -s 【目标目录】 【软链接地址】
 
-hexo clean 清除缓存
+目标目录】指软连接指向的目标目录下，【软链接地址】指“快捷键”文件名称，该文件是被指令创建的。
 
-hexo (d)eploy  部署
+rm -rf 【软链接地址】
 
-hexo (g)ene
-
-## docker
-
-### 备份和恢复mysql数据
-
-单数据库
-
-> ```shell
-> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 test' > /home/mysql/backup/emp_`date +\%F`.sql;
-> ```
-
-多数据库
-
-> ```shell
-> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 --databases test' > /home/mysql/backup/emp_`date +\%F`.sql;
-> ```
-
-全数据库
-
-> ```shell
-> docker exec -i mysql /bin/bash -c 'mysqldump -uroot -p123456 --all-databases ' > /home/mysql/backup/emp_`date +\%F`.sql;
-> ```
-
-**还原：**
-
-> 1. 进入mysql容器, 并选择数据库
->
-> 2. ```shell
->    source /var/backup/emp_2023-01-13.sql
->    ```
-
-### 复制到容器
-
-1.  从本机到容器
-
-> docker cp
->
-> $ docker cp new_file.txt 0c57de10362b:/usr/share
-
-1. 从容器到容器
-
-> docker volum 
->
-> $ docker volume create volume_one
->
-> $ docker volume ls
->
-> $ docker run -d -v volume_one:/app nginx:latest
->
-> $ docker inspect f2457d3eb8fe
->
-> `docker volume` 命令的优点之一是创建与多个容器共享的单个目录。
+ln -snf 【新目标目录】 【软链接地址】
 
 # pacman
 
@@ -430,7 +387,7 @@ hexo (g)ene
 >
 >```
 >yay -S debtap
->sudo tabtap -u
+>sudo deqbtap -u
 >```
 >
 >使用 cd 命令进入 DEB 文件的目录并使用 Debtap 开始转换包。
