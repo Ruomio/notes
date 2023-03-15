@@ -56,3 +56,66 @@ DC、AC、CUL
 
 ## GUI AITEST 测试软件 （仅有Windows环境）
 
+# 业务流程
+## 1.Signals/Group
+将芯片针脚命名类型 (In, Out, InOut, Supply等)
+命名组: 组名(变量名) = {Singal 集合 ,支持 +,- 运算符}
+## 2.DCExec
+包含DCLevel,DCLevel包含DCSPec 和 Category&Selctor
+```
+STIL 1.0;
+Include "PinLevel.stil"
+
+DCExec "level_3v"{
+	Category		"level_3V";
+	Selector		"Seletcot_Typ";
+	DCLevels		"PinLevel";
+}
+
+DCExec "level_3v"{
+	Category		"level_4.5V";
+	Selector		"Seletcot_Typ";
+	DCLevels		"PinLevel";
+}
+
+DCExec "level_3v"{
+	Category		"level_5.5V";
+	Selector		"Seletcot_Typ";
+	DCLevels		"PinLevel";
+}
+
+DCExec "level_5.5_min_max"{
+	Category		"level_5.5V";
+	Selector		"Seletcot_min_max";
+	DCLevels		"PinLevel";
+}
+```
+### DCLevel,PinLevel
+```
+STIL 1.0;
+Include "Signals.stil"
+Include "DCSpec.stil"
+
+DCLevels "CON"{
+
+	VCC{
+		VForce		'VCC';
+		IRange		'0.25';
+		Delay		'0.005';
+	}
+
+	all{
+		VIL			'VIL';	
+		VIH			'VIH';
+		VOL			'VOL';
+		VOH			'VOH';
+		IOH			'IOH';
+		IOL			'IOL';
+	}
+}
+```
+## 3.DCSeqence
+
+## 4.PatternExec
+## 5. Test Items
+## 6.Test Flow
