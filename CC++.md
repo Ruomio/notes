@@ -478,4 +478,7 @@ operator[]       　　　　　返回容器中指定位置的一个引用。
     int (*p)[3] = new int[3][3];
 
     int **p = new int*[3]
+
+    //传参数
+    void matrix_mutifly(int (*A)[10], int (*B)[10], int (*C)[10]){}
 ```
