@@ -98,3 +98,384 @@ D --> E["recv()/send() <br> 5. 接收/发送数据"]
 E --> F["close() <br> 6. 关闭socket连接，释放资源"]
 ```
 
+# String
+如果希望在最终读入的字符串中保留空格，可以使用getline函数
+getline(cin , s1); 
+## 1.字符串构造函数
+```c++
+   string str1;               //生成空字符串
+   string str2("123456789");  //生成"1234456789"的复制品
+   string str3("12345", 0, 3);//结果为"123"
+   string str4("012345", 5);  //结果为"01234"
+   string str5(5, '1');       //结果为"11111"
+   string str6(str2, 2);      //结果为"3456789"
+```
+## 2.string大小和容量
+1. size()和length()：返回string对象的字符个数，他们执行效果相同。
+2. max_size()：返回string对象最多包含的字符数，超出会抛出length_error异常
+3. capacity()：重新分配内存之前，string对象能包含的最大字符数
+```C++
+   string s("1234567");
+   cout << "size=" << s.size() << endl;      //7
+   cout << "length=" << s.length() << endl;  //7
+   cout << "max_size=" << s.max_size() << endl; // 4294967294
+   cout << "capacity=" << s.capacity() << endl; // 15
+```
+## 3.string的字符串比较
+1. C ++字符串支持常见的比较操作符（>,>=,<,<=,==,!=），甚至支持string与C-string的比较(如 str<”hello”)。  
+在使用>,>=,<,<=这些操作符的时候是根据“当前字符特性”将字符按字典顺序进行逐一得 比较。字典排序靠前的字符小，  
+比较的顺序是从前向后比较，遇到不相等的字符就按这个位置上的两个字符的比较结果确定两个字符串的大小(前面减后面)
+同时，string ("aaaa") < string("aaaaa")。    
+
+2. 另一个功能强大的比较函数是成员函数compare()。他支持多参数处理，支持用索引值和长度定位子串来进行比较。 
+  他返回一个整数来表示比较结果，返回值意义如下：0：相等 1：大于 -1：小于 (A的ASCII码是65，a的ASCII码是97)
+```c++
+   string A("aBcd");
+   string B("Abcd");
+   string C("123456");
+   string D("123dfg");
+
+   // "aBcd" 和 "Abcd"比较------ a > A
+   cout << "A.compare(B)：" << A.compare(B)<< endl;                          // 结果：1
+
+   // "cd" 和 "Abcd"比较------- c > A
+   cout << "A.compare(2, 3, B):" <<A.compare(2, 3, B)<< endl;                // 结果：1
+
+   // "cd" 和 "cd"比较 
+   cout << "A.compare(2, 3, B, 2, 3):" << A.compare(2, 3, B, 2, 3) << endl;  // 结果：0
+
+
+   // 由结果看出来：0表示下标，3表示长度
+   // "123" 和 "123"比较 
+   cout << "C.compare(0, 3, D, 0, 3)" <<C.compare(0, 3, D, 0, 3) << endl;    // 结果：0
+```
+## 4.string的插入
+1. push_back() : 在尾部插入字符
+2. insert(pos, char) : 在 pos前插入字符串char
+## 5.string字符串拼接
+1. append() : 尾部加入字符串
+2. + : 尾部加入字符串
+```c++
+   // 方法一：append()
+   string s1("abc");
+   s1.append("def");
+   cout<<"s1:"<<s1<<endl; // s1:abcdef
+
+   // 方法二：+ 操作符
+   string s2 = "abc";
+   /*s2 += "def";*/
+   string s3 = "def";
+   s2 += s3.c_str();
+   cout<<"s2:"<<s2<<endl; // s2:abcdef
+```
+## 6.string遍历
+迭代器 或者 下标法
+```c++
+   string::iterator iter = s1.begin();
+   for( ; iter < s1.end() ; iter++)
+   {
+      cout<<*iter;
+   }
+   cout<<endl;
+```
+str[i] / str.at(i);
+## 7.string的删除
+1. iterator erase(iterator p);//删除字符串中p所指的字符
+2. iterator erase(iterator first, iterator last);//删除字符串中迭代器区间`[first,last)`上所有字符  左闭右开
+3. string& erase(size_t pos = 0, size_t len = npos);//删除字符串中从索引位置pos开始的len个字符
+4. void clear();//删除字符串中所有字符
+```c++
+    string s1 = "123456789";
+
+
+    // s1.erase(s1.begin()+1);              // 结果：13456789
+    // s1.erase(s1.begin()+1,s1.end()-2);   // 结果：189
+    s1.erase(1,6);                       // 结果：189
+    string::iterator iter = s1.begin();
+```
+## 8.string的字符替换
+1. string& replace(size_t pos, size_t n, const char *s);//将当前字符串从pos索引开始的n个字符，替换成字符串s
+2. string& replace(size_t pos, size_t n, size_t n1, char c); //将当前字符串从pos索引开始的n个字符，替换成n1个字符c
+3. string& replace(iterator i1, iterator i2, const char* s);//将当前字符串`[i1,i2)`区间中的字符串替换为字符串s
+```c++
+    string s1("hello,world!");
+
+    cout<<s1.size()<<endl;                     // 结果：12
+    s1.replace(s1.size()-1,1,1,'.');           // 结果：hello,world.
+
+    // 这里的6表示下标  5表示长度
+    s1.replace(6,5,"girl");                    // 结果：hello,girl.
+    // s1.begin(),s1.begin()+5 是左闭右开区间
+    s1.replace(s1.begin(),s1.begin()+5,"boy"); // 结果：boy,girl.
+    cout<<s1<<endl;
+```
+
+## 9.string大小写替换
+1. tolower(); toupper();
+```c++
+   string s = "ABCDEFG";
+
+   for( int i = 0; i < s.size(); i++ )
+   {
+      s[i] = tolower(s[i]);
+   }
+```
+2. STL的transform算法配合的toupper和tolower
+```c++
+    string s = "ABCDEFG";
+    string result;
+
+    transform(s.begin(),s.end(),s.begin(),::tolower);
+```
+## 10.string的查找
+1. size_t find (constchar* s, size_t pos = 0) const;
+//在当前字符串的pos索引位置开始，查找子串s，返回找到的位置索引，-1表示查找不到子串
+
+2. size_t find (charc, size_t pos = 0) const;
+//在当前字符串的pos索引位置开始，查找字符c，返回找到的位置索引，-1表示查找不到字符
+
+3. size_t rfind (constchar* s, size_t pos = npos) const;
+//在当前字符串的pos索引位置开始，反向查找子串s，返回找到的位置索引，-1表示查找不到子串
+
+4. size_t rfind (charc, size_t pos = npos) const;
+//在当前字符串的pos索引位置开始，反向查找字符c，返回找到的位置索引，-1表示查找不到字符
+
+5. size_tfind_first_of (const char* s, size_t pos = 0) const;
+//在当前字符串的pos索引位置开始，查找子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+6. size_tfind_first_not_of (const char* s, size_t pos = 0) const;
+//在当前字符串的pos索引位置开始，查找第一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+7. size_t find_last_of(const char* s, size_t pos = npos) const;
+//在当前字符串的pos索引位置开始，查找最后一个位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+8. size_tfind_last_not_of (const char* s, size_t pos = npos) const;
+//在当前字符串的pos索引位置开始，查找最后一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到子串
+```c++
+    string s("dog bird chicken bird cat");
+
+    //字符串查找-----找到后返回首字母在字符串中的下标
+
+    // 1. 查找一个字符串
+    cout << s.find("chicken") << endl;        // 结果是：9
+
+    // 2. 从下标为6开始找字符'i'，返回找到的第一个i的下标
+    cout << s.find('i',6) << endl;            // 结果是：11
+
+    // 3. 从字符串的末尾开始查找字符串，返回的还是首字母在字符串中的下标
+    cout << s.rfind("chicken") << endl;       // 结果是：9
+
+    // 4. 从字符串的末尾开始查找字符
+    cout << s.rfind('i') << endl;             // 结果是：18-------因为是从末尾开始查找，所以返回第一次找到的字符
+
+    // 5. 在该字符串中查找第一个属于字符串s的字符
+    cout << s.find_first_of("13br98") << endl;  // 结果是：4---b
+
+    // 6. 在该字符串中查找第一个不属于字符串s的字符------先匹配dog，然后bird匹配不到，所以打印4
+    cout << s.find_first_not_of("hello dog 2006") << endl; // 结果是：4
+    cout << s.find_first_not_of("dog bird 2006") << endl;  // 结果是：9
+
+    // 7. 在该字符串最后中查找第一个属于字符串s的字符
+    cout << s.find_last_of("13r98") << endl;               // 结果是：19
+
+    // 8. 在该字符串最后中查找第一个不属于字符串s的字符------先匹配t--a---c，然后空格匹配不到，所以打印21
+    cout << s.find_last_not_of("teac") << endl;            // 结果是：21
+
+```
+
+## 11.string的排序 sort(s.begin(),s.end())
+```c++
+    string s = "cdefba";
+    sort(s.begin(),s.end());
+    cout<<"s:"<<s<<endl;     // 结果：abcdef
+```
+## 12.string的分割/截取 strtok() / substr()
+1. strtok()
+```c++
+    char str[] = "I,am,a,student; hello world!";
+
+    const char *split = ",; !";
+    char *p2 = strtok(str,split);
+```
+2. substr()
+```c++
+    string s1("0123456789");
+    string s2 = s1.substr(2,5); // 结果：23456-----参数5表示：截取的字符串的长度
+```
+
+## 13. string char 转换
+将数值 val 转换为 string 。val 可以是任何算术类型（int、浮点型等）。
+`string s = to_string(val)`
+
+## 14. string reverse反转
+reverse(str.begin(),str.end());
+reverse还可用于数组 reverse(array, array+arrat.lenth())
+STL任何容器都可以。
+
+## sscanf(const char *str, const char *format, ...);
+```c++
+int converted = sscanf("20191103", "%04d%02d%02d", &year, &month, &day);
+printf("converted=%d, year=%d, month=%d, day=%d/n", converted, year, month, day);
+```
+## string 转 time_t
+```c++
+//linux下存储时间常见的有两种存储方式，一个是从1970年到现在经过了多少秒，一个是用一个结构来分别存储年月日时分秒的。
+//time_t 这种类型就是用来存储从1970年到现在经过了多少秒，要想更精确一点，可以用结构struct timeval，它精确到微妙。
+// 从1970-1-1 00：00：00 过了多少秒
+struct time_t{
+   long t_sec;
+};
+struct timeval
+{
+    long tv_sec; /*秒*/
+    long tv_usec; /*微秒*/
+};
+struct tm
+{
+    int tm_sec;  /*秒，正常范围0-59， 但允许至61*/
+    int tm_min;  /*分钟，0-59*/
+    int tm_hour; /*小时， 0-23*/
+    int tm_mday; /*日，即一个月中的第几天，1-31*/
+    int tm_mon;  /*月， 从一月算起，0-11*/  1+p->tm_mon;
+    int tm_year;  /*年， 从1900至今已经多少年*/  1900＋ p->tm_year;
+    int tm_wday; /*星期，一周中的第几天， 从星期日算起，0-6*/
+    int tm_yday; /*从今年1月1日到目前的天数，范围0-365*/
+    int tm_isdst; /*日光节约时间的旗标*/
+};
+
+time_t  time1 = time(NULL);//获取系统时间，单位为秒;
+tm* t = localtime(&time1); //将换取的time_t时间转换为 struct tm
+
+```
+### 常用函数
+```c++
+time_t time(time_t *t); //取得从1970年1月1日至今的秒数  
+char *asctime(const struct tm *tm); //将结构中的信息转换为真实世界的时间，以字符串的形式显示  
+char *ctime(const time_t *timep); //将timep转换为真是世界的时间，以字符串显示，它和asctime不同就在于传入的参数形式不一样  
+struct tm *gmtime(const time_t *timep); //将time_t表示的时间转换为没有经过时区转换的UTC时间，是一个struct tm结构指针   
+struct tm *localtime(const time_t *timep); //和gmtime类似，但是它是经过时区转换的时间。  
+time_t mktime(struct tm *tm); //将struct tm 结构的时间转换为从1970年至今的秒数  
+int gettimeofday(struct timeval *tv, struct timezone *tz); //返回当前距离1970年的秒数和微妙数，后面的tz是时区，一般不用  
+double difftime(time_t time1, time_t time2); //返回两个时间相差的秒数  
+```
+
+## 绝对值，随机数
+* abs(). fabs() : 分别用于整数和浮点数取绝对值
+* rand() : 返回非负整数
+  
+# 文件操作
+## C
+文件的打开
+fopen()：打开文件
+文件的关闭
+fclose()：关闭文件
+
+文件的读写
+fgetc()：读取一个字符   int fgetc ( FILE * stream );
+fputc()：写入一个字符   int fputc( int c, FILE *stream );
+
+fgets()：读取一个字符串 char * fgets ( char * str, int num, FILE * stream );
+fputs()：写入一个字符串 int fputs( const char *string, FILE *stream );
+
+fprintf()：写入格式化数据
+fscanf()：格式化读取数据
+
+fread()：读取数据   size_t fread ( void * ptr, size_t size, size_t count, FILE * stream );
+fwrite()：写入数据  size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream );
+
+
+文件状态检查
+feof()：文件是否结束
+ferror()：文件读/写是否出错
+clearerr()：清除文件错误标志
+ftell()：文件指针的当前位置
+
+文件指针定位
+rewind()：把文件指针移到开始处
+fseek()：重定位文件指针
+
+
+## C++
+输出流：ostream (output stream)
+输出流：istream (input stream)
+输入输出流：iostream
+写操作（输出）的文件类：ofstream
+读操作（输入）的文件类：ifstream
+可同时读写操作的文件类：fstream (file stream)
+```c++
+//对文件的读取示例
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+using namespace std;
+int main ()
+{
+    char buffer[256];                       //定义一个数组，用来存放字符
+    ifstream examplefile("example.txt");    //声明一个对象与要读的文件联系
+    if (! examplefile.is_open())            //
+    {
+        cout << "Error opening file"; exit (1);
+    }
+    while (!examplefile.eof())
+    {
+        examplefile.getline(buffer,100);
+        cout<<buffer<< endl;
+    }
+    return 0;
+}
+```
+
+# STL容器
+需要引入相应的头文件
+1 vector<int>vec;//定义vector,常用
+2 list<int>lis;
+3 deque<int>deq;
+4 stack<int>sta;//定义栈,常用
+5 queue<int>que;//定义栈,常用
+
+```c++
+//vector的定义
+vector                   创建一个空的vector。
+vector  c1(c2)           复制一个vector
+vector  c(n)             创建一个vector，含有n个数据，数据均已缺省构造产生
+vector  c(n, elem)   　　 创建一个含有n个elem拷贝的vector
+vector  c(beg,end)       创建一个含有n个elem拷贝的vector
+
+//vector的操作
+c.assign(beg,end)        将 [beg; end)区间中的数据赋值给c。
+c.assign(n,elem)　　　　  将n个elem的拷贝赋值给c。
+c.at(idx)　　　　　　　　  传回索引idx所指的数据，如果idx越界，抛出out_of_range。
+c.back()                 传回最后一个数据，不检查这个数据是否存在。
+c.begin()    　　　　　　　传回迭代器中的第一个数据地址。
+c.capacity()  　　　　　　 返回容器中数据个数。
+c.clear()     　　　　　　 移除容器中所有数据。
+c.empty()     　　　　　　 判断容器是否为空。
+c.end()       　　　　　　 指向迭代器中末端元素的下一个，指向一个不存在元素。
+c.erase(pos) 　　　　　　  删除pos位置的数据，传回下一个数据的位置。
+c.erase(beg,end)  　　 　 删除[beg,end)区间的数据，传回下一个数据的位置。
+c.front()     　　　　　　 传回第一个数据。
+get_allocator　　　　　　  使用构造函数返回一个拷贝。
+c.insert(pos,elem)   　　 在pos位置插入一个elem拷贝，传回新数据位置。
+c.insert(pos,n,elem)  　　在pos位置插入n个elem数据。无返回值。
+c.insert(pos,beg,end) 　　在pos位置插入在[beg,end)区间的数据。无返回值。
+c.max_size()       　　   返回容器中最大数据的数量。
+c.pop_back()      　　　　 删除最后一个数据。
+c.push_back(elem) 　　    在尾部加入一个数据。
+c.rbegin()         　　　　传回一个逆向队列的第一个数据。
+c.rend()           　　　　传回一个逆向队列的最后一个数据的下一个位置。
+c.resize(num)     　　　　 重新指定队列的长度。
+c.reserve()       　　　　 保留适当的容量。
+c.size()             　　 返回容器中实际数据的个数。
+c1.swap(c2)
+swap(c1,c2)      　　　　　将c1和c2元素互换。同上操作。
+operator[]       　　　　　返回容器中指定位置的一个引用。
+```
+
+# 二位数组
+数组指针 != 指针数组
+```c++
+    // [] 优先级比 * 高
+    int (*p)[3] = new int[3][3];
+
+    int **p = new int*[3]
+```

@@ -345,3 +345,8 @@ ffmpeg -i test.mp4 -i test.mp3 -c copy out.mp4
 
 
 
+# Qt
+## 编译安装
+1. configure.bat -static -prefix "D:\qt-5.12.2" -confirm-license -opensource  -debug-and-release -platform win32-msvc  -nomake examples -nomake tests -plugin-sql-sqlite -plugin-sql-odbc -qt-zlib -qt-libpng -qt-libjpeg -opengl desktop -mp
+2. nmake // jom -j7
+3. nmake install    // jom install -j7
