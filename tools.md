@@ -74,6 +74,18 @@ doc/.txt# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 >    
 
 
+## 统计提交代码
+要统计一个Git仓库中提交了多少行代码，可以使用以下命令：
+
+```git
+git log --author=<作者名> --pretty=tformat: --numstat | awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "Added lines: %s, Removed lines: %s, Total lines: %s\n", add, subs, loc }' -
+```
+
+将 `<作者名>` 替换为你想要统计的作者名，或者省略该参数以统计整个仓库的代码行数。
+
+该命令会输出三个数字，分别表示新增的行数、删除的行数和总行数。
+
+
 
 # MarkDowm
 
