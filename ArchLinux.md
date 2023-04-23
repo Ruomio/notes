@@ -134,6 +134,23 @@ nmcli con modify "自定义连接名称" wifi-sec.psk "WiFi的密码"
 nmcli con up "自定义连接名称"
 ```
 
+查看网卡信息：
+
+```shell
+# 查看网卡信息：
+nmcli dev show wlp7s0
+
+# 创建网卡
+nmcli connection add type bridge ifname br0 stp no
+
+# 查看桥接绑定信息
+brctl show
+```
+
+
+
+
+
 ## 查看端口
 
 netstat -anp | grep 端口号
@@ -363,6 +380,9 @@ scp -p 22 {本地文件} Linux用户名@ip地址:Linux绝对路径
 
 # 上传
 去掉指定端口号参数-p, 并将上述路径舒徐调换即可
+
+#下载
+scp -p 22 linux用户名@ipdizhi:文件路径 {本地路径}
 ```
 
 ## ln 软链接
