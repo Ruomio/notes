@@ -34,7 +34,7 @@ int CLogwrite::WriteLogData(IUXLogData* pLogData){
     if(writesize > BUFMAX){
         unsigned char* pdata = (unsigned char*)malloc(writesize);
         pLogData->WriteMemory(pdata);
-
+    
         ::WriteFile(m_hwrite, pdata, writesize, &nwritten， NULL);
         ::free(pdata);
         m_nIndex = 0:
@@ -111,3 +111,17 @@ int CLogwrite::WriteLogData(IUXLogData* pLogData){
 ```
 
 原因是PwrTest保存rtdf时只保存了测试结果数据。故用格式转换工具正常，但是rtdf_view无法加载（缺少以上信息）
+
+
+
+# EduTest
+
+vs 2010版本问题，咱们不都是用的2015吗
+
+## 周期安排：
+
+5月： ChannelMap模块，Signal模块
+
+六月：DCExec，PatternExec模块
+
+七月：TestItems模块，WxFlow模块以及整体测试

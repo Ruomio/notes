@@ -14,7 +14,9 @@
 
 > mod + i 竖向布局
 >
-> mod +d 横向布局
+> mod + d 横向布局
+>
+> shift + alt + space 从悬浮小窗口切换到平铺
 
 ## picom
 
