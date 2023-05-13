@@ -113,6 +113,71 @@ int CLogwrite::WriteLogData(IUXLogData* pLogData){
 原因是PwrTest保存rtdf时只保存了测试结果数据。故用格式转换工具正常，但是rtdf_view无法加载（缺少以上信息）
 
 
+devenv.exe /Command "File.NewProject" /useenv /project "D:\Al_code" /projecttype "Win32" /language "C++" /template "AITest_Prog"
+devenv.exe /Command "File.NewProject" /useenv /project "D:\Al_code\Test" /template "AITest_Prog"
+devenv.exe /newproject "D:\Al_code\projectnameTest" /ProjectType C++ /Platform x86
+
+D:\Program Files\Microsoft Visual Studio\2022\Professional\Common7\IDE\devenv.exe
+
+## 需要修改的项目名
+C++ WxFlow&UXO .sln .vcxproj .filters .user 
+
+
+
+
+
+# 论文问题
+1. 引用顺序
+2. 国内外研究现状 要有参考文献引用
+3. 每一章分页符
+4. 英文文献 D J M 多类型
+5. 英文大小写
+6. 图名和图序
+7. 代码核心的部分就行
+8. 日期
+9. 三方面摘要 why how what 
+10. 图表要用三线表， 下一页要续表
+11. 总结展望 不要第一人称
+12. 每一个章节至少两页
+13. 两端对齐
+14. 公式后边要加公式名顺序
+
+
+# EduTest
+
+1. [x] 不需要切换用户
+2. [x] 不需要 基本信息显示
+3. [x] 卸载flow
+4. [x] 关闭按钮
+5. [x] 更改名称
+6. [x] 停止测试 logo
+7. [x] pause <- 停止icon
+8. [x] 全项测试 <- override
+9. [x] 格式转换 -> 向量转换
+10. [x] pause -> 状态保持
+11. [x] 状态栏 修改 
+12. [x] logo
+13. [x] 右上角picture
+14. [x] logo 主改掉
+
+1. channelmap 拿掉
+2. 菜单栏 工具栏 协调
+3. [x] flow位置显示
+4. 快速模式 学习模式
+5. 一行一个测试项
+6. 配置文件 和 cpp 分开界面
+7. wxflow留一套入口
+8. [x] tdr 位置放到菜单栏
+9. [x] 文件右键打开文件夹 [] 另存为
+10. [x] inner checker 
+11. 全项测试 位置 图片样式 勾选
+12. 重复测试 tooltip 
+13. 打开工程从tool 去掉
+14. 更改名称 去掉
+15. 删除测试项， 给出确认提示
+
+
+
 
 # EduTest
 

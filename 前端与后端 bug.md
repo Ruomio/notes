@@ -516,3 +516,23 @@ int main(int argc, char *argv[])
 ```
 
 在这个例子中，MyClass类定义了两个重载的信号和槽，分别接受int和double类型的参数。我们可以通过函数指针或lambda表达式来连接不同的信号和槽。
+
+
+## 弹窗提示
+在 Qt 中弹出提示信息可以使用 QMessageBox 类。以下是一个简单的示例：
+
+cpp
+QMessageBox::information(this, tr("标题"), tr("提示信息"));
+
+# VS 编译错误
+## 链接错误
+```
+1>EduTest.obj : error LNK2001: 无法解析的外部符号 "public: void __thiscall EduTest_AutoLoader::LoadInfoChange_Signal(void)" (?LoadInfoChange_Signal@EduTest_AutoLoader@@QAEXXZ)
+1>EduTest_AutoLoader.obj : error LNK2001: 无法解析的外部符号 "public: void __thiscall EduTest_AutoLoader::LoadInfoChange_Signal(void)" (?LoadInfoChange_Signal@EduTest_AutoLoader@@QAEXXZ)
+1>EduTest.obj : error LNK2001: 无法解析的外部符号 "public: static struct QMetaObject const EduTest_AutoLoader::staticMetaObject" (?staticMetaObject@EduTest_AutoLoader@@2UQMetaObject@@B)
+1>EduTest_AutoLoader.obj : error LNK2001: 无法解析的外部符号 "public: virtual struct QMetaObject const * __thiscall EduTest_AutoLoader::metaObject(void)const " (?metaObject@EduTest_AutoLoader@@UBEPBUQMetaObject@@XZ)
+1>EduTest_AutoLoader.obj : error LNK2001: 无法解析的外部符号 "public: virtual void * __thiscall EduTest_AutoLoader::qt_metacast(char const *)" (?qt_metacast@EduTest_AutoLoader@@UAEPAXPBD@Z)
+1>EduTest_AutoLoader.obj : error LNK2001: 无法解析的外部符号 "public: virtual int __thiscall EduTest_AutoLoader::qt_metacall(enum QMetaObject::Call,int,void * *)" (?qt_metacall@EduTest_AutoLoader@@UAEHW4Call@QMetaObject@@HPAPAX@Z)
+```
+
++ 可能是字符编码格式问题，可用 UTF-8(BOM)
