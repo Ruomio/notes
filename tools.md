@@ -58,15 +58,22 @@ doc/.txt# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 ```
 
 > 1. 如果已经提交过的文件或者文件夹怎么办？此时更改.gitignore文件对已经提交的文件是无效的。
+>
 >    2.1 首先，编辑.gitignore文件。
+>
 >    2.2 然后如果是单个文件，可以使用如下命令从**仓库**中删除：
+>
 >    `git rm --cached logs/xx.log`
+>
 >    如果是整个目录：
 >    `git rm --cached -r logs`
+>
 >    如果文件很多，那么直接
 >    `git rm --cached -r .`
+>
 >    如果提示某个文件无法忽略，可以添加`-f`参数强制忽略。
 >    `git rm -f --cached logs/xx.log`
+>
 >    2.3 然后
 >    `git add .`
 >    `git commit -m "Update .gitignore"`
