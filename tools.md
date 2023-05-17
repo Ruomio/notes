@@ -83,12 +83,19 @@ doc/.txt# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 * 注意：应该在忽略某些文件之前，先将它们从仓库中删除，并确保其他人已经拉取了这个更新。或者，在忽略某些文件后，不要将它们提交到仓库中，以避免影响其他人的本地文件。
 
 ### 保留文件但不跟踪更改
-有时，我们可能希望在仓库中保留一个文件，但不再希望跟踪其更改。我们可以使用带有 --skip-worktree 选项的 git update-index 命令来实现这一点。
++ --skip-worktree
+* --assume-unchanged
 
 ```shell
 $ git update-index --skip-worktree file1
 ```
 命令 git update-index 的 --skip-worktree 选项使 Git 假装文件的版本是最新的，而是从索引版本中读取。这对于配置文件特别有用。
+
+> --assume-unchanged 假定开发人员不会更改文件。此标记旨在为无变化文件夹（如 SDK）改善性能。
+> 
+> --skip-worktree 用于命 GIT 不再染指特定文件——即便开发人员可能更改它——的情形。例如，如果主源码库上游承载某些即将投入生产的配置文件而你不希望意外的提交影响到那些文件
+
+
 
 
 ## 统计提交代码
