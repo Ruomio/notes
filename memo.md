@@ -13,13 +13,16 @@ B区院校：
 
 内蒙古：内蒙古大学，广西：广西大学，海南：海南大学，贵州：贵州大学，云南：云南大学，西藏：西藏大学，新疆：新疆大学、石河子大学。全。
 
-
+## wsl 2
+netsh winsock reset
 
 ## HMCl
 
 方块传说服务器ip：mcfkcs.com:12345
 
-
+# EduTest
+## AITest的测试结果保存
+```C++
 int CLogwrite::WriteLogData(IUXLogData* pLogData){
 
     if (m hwrite == INVALID_HANDLE_VALUE)
@@ -45,7 +48,7 @@ int CLogwrite::WriteLogData(IUXLogData* pLogData){
     }
     return writesize;
 }
-
+```
 
 ## RTDF_View无法读取问题
 原因：[Header] 信息没有
@@ -142,6 +145,9 @@ C++ WxFlow&UXO .sln .vcxproj .filters .user
 13. 两端对齐
 14. 公式后边要加公式名顺序
 
+# PwrTest 问题
+## rtdf
++ 原因：header信息头不完整
 
 # EduTest
 
@@ -187,8 +193,15 @@ vs 2010版本问题，咱们不都是用的2015吗
 13. [x] 打开工程从tool 去掉
 14. [x] 更改名称 去掉
 15. [x] 删除测试项， 给出确认提示
+16. [x] 当前项目
+17. 联系burce,需要一些exe
+18. - [x] 参数配置表 新增测试项
+
+### 测试项写入办法
+1. 通过模板：参数要开放很多
 
 
+2. X 通过初步设计的填表，填写太复杂
 
 
 
