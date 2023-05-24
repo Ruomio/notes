@@ -433,3 +433,19 @@ ln -snf 【新目标目录】 【软链接地址】
 >dpkg -i .deb包名
 >```
 
+## 安装
+
+pacmam -U package.pkg.tar.gz 从安装本地package包
+
+## 代理问题
+
+```shell
+# 设置 http 代理
+export http=http://127.0.0.1:7890
+export https=http://127.0.0.1:7890
+
+# 或, 设置 socket 代理(clash)
+export http_proxy=socks5://127.0.0.1:7891
+export https_proxy=socks5://127.0.0.1:7891
+```
+
