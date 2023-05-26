@@ -379,7 +379,7 @@ public:
 ```
 > 这段代码定义了一个名为 DSCheckComboBoxPrivate 的类，它是 QObject 类的子类。该类中声明了一个指向 DSCheckComboBox 类对象的指针 q_ptr，以及一些成员变量和成员函数。
 >
-> 其中，Q_DECLARE_PUBLIC(DSCheckComboBox) 宏用于在类的私有部分声明一个指向公共部分>的指针，它允许私有部分访问公共部分成员函数和数据成员。
+> 其中，Q_DECLARE_PUBLIC(DSCheckComboBox) 宏用于在类的私有部分声明一个指向公共部分的指针，它允许私有部分访问公共部分成员函数和数据成员。
 >
 > DSCheckComboBoxPrivate 中的成员变量包括：
 >```txt 
@@ -458,9 +458,9 @@ private:
 > - Q_PROPERTY：宏定义，用于声明属性，包括读取和写入该属性的函数。
 > - hidePopup()：重载了 QComboBox 中的方法，用于隐藏下拉框。
 > - defaultText() 和 setDefaultText()：用于获取和设置默认文本。
-> - itemCheckState() 和 setItemCheckState()：用于获取和设置下拉框中某一项的勾选状> 态。
+> - itemCheckState() 和 setItemCheckState()：用于获取和设置下拉框中某一项的勾选状态。
 > - separator() 和 setSeparator()：用于获取和设置字符串分割方式。
-> - checkedItems() 和 checkedIndexs()：分别用于获取所有勾选的文本和所有勾选项的索> 引。
+> - checkedItems() 和 checkedIndexs()：分别用于获取所有勾选的文本和所有勾选项的索引。
 > - setCheckedItems()：用于设置勾选的文本。
 > - checkedItemsChanged()：信号，当勾选的项目发生变化时发出该信号。
 > - eventFilter()：事件过滤器，用于在事件处理之前捕获并处理事件。
