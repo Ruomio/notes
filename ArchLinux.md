@@ -75,7 +75,7 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 
 > sudo vim /etc/optimus-manager/optimus-manager.conf
 >
-> 修改 startup_mode=integrated  后 重启
+> 修改 startup_mode=integrated  后 注销
 
 
 ## 登录选择位置
