@@ -414,3 +414,13 @@ private:
 * Qt提供了以下顺序容器:QList、QLinkedList、QVector、QStack和QQueue。对于大多数应用程序，QList是最好的类型。虽然它是作为数组列表实现的，但是它提供了非常快的前置和附加。如果你真的需要一个链表，使用QLinkedList;如果您希望您的项目占用连续的内存位置，请使用QVector。QStack和QQueue是提供LIFO和FIFO语义的便利类。
 * Qt还提供了这些关联容器:QMap、QMultiMap、QHash、QMultiHash和QSet。“多”容器方便地支持与单个键相关联的多个值。“哈希”容器通过使用哈希函数而不是对排序集进行二进制搜索，从而提供更快的查找。
 * 作为特殊情况，QCache和QContiguousCache类在有限的缓存存储中提供了对象的高效散列查找。
+
+## QGraphics
+### QGraphics图形视图框架由3部分组成：
++ QGraphics Scene
++ Graphics Item
++ Graphics View
+> Scene无限大，负责管理所有的Items，View是用来查看的窗口，可以透过这个窗口看到Scene的一部分。
+
+> 注：有一种使用方法，多个Scene对应一个View，该每个Scene有自己的Items，相当于多个Scene每个都有自己管理得对象，通过切换Scene实现显示Item组的切换。
+
