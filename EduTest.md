@@ -58,7 +58,7 @@ date        |                           Worklog                          |
 | --------- |:----------------------------------------------------------:|
 6.1         |   图元像素区域超过视图绘制矩形范围的问题                      |
 6.2         |   QGraphicsView中的 像素 绘制bug，（高分屏引起的）,exe icon  |
-
+6.5         |   rtdf多次测试后无法正常保存问题。换一套存入方式解决(win api)  |
 
 
 ## 周期安排：
@@ -111,7 +111,7 @@ date        |                           Worklog                          |
 
 
 
-### RTDFViewer 
+## RTDFViewer 
 AITest 只有测试结果导出的rtdf：
 > FAR ATR SDR PMR PMR PMR PMR PMR PMR PMR PMR
 PMR
@@ -384,9 +384,14 @@ SBR
 PCR
 MRR
 
+### RTDF文件尾部写入失败
+复现：
+只要测试次数超过10次。尾部信息被识别为TEXT
+
+对比同样操作与AITest区别：
 
 
-### 测试项写入办法
+## 测试项写入办法
 1. 通过模板：参数要开放很多
 
 
