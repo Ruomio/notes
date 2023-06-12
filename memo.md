@@ -150,6 +150,21 @@ C++ WxFlow&UXO .sln .vcxproj .filters .user
 + 原因：header信息头不完整
 
 
-
-
+int main() {
+    using namespace std;
+    int * num_ptr = function1(1,2);
+    cout << *num_ptr << " "<< num_ptr[1]<< endl;   // 输出num_prt的内容
+    cout << num_ptr << endl;
+    // 出内存地处
+    delete[] num_ptr;
+    return 0;
+}
+int *function1(int num1, int num2){
+    using namespace std;
+    int num[]= {num1,num2};
+    int *ptr = new int[2];
+    for (inti=0;i<2;i++)
+        ptr[i]=num[i];
+    return ptr;
+}
 
