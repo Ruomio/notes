@@ -70,6 +70,7 @@ date        |                           Worklog                          |
 6.8         |   参与专利申请交流会， 在 .cpp插入所需头文件                  |
 6.9         |   与西安SOC讨论方案；改进写入Signal.stil文件逻辑；保存rtdf逻辑完善；参数配置界面完善|
 6.12        |   SignalAndGroup保存方式大改                                  |
+6.13        |   DCSequrnce 保存实现                                     |
 
 
 ## 周期安排：
