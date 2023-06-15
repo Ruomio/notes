@@ -72,7 +72,15 @@ date        |                           Worklog                          |
 6.12        |   SignalAndGroup保存方式大改                                  |
 6.13        |   DCSequrnce 保存实现                                     |
 6.14        |   TimeSet 保存的实现: 从文件读 并保存到变量Map                |
-6.15        |   TimeSet 保存的实现: 从表格读,并写入文件                     |
+6.15        |   TimeSet 保存的实现: 从表格读,并写入文件; 保存配置信息到成员变量  |
+
+
+
+## 全局变量
+Signals , vector中的文件名, 所有STIL文件名
+QRegularExpression re("[A-Za-z0-9]+");
+
+mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updateAllStil;
 
 ## 周期安排：
 
@@ -619,3 +627,5 @@ private:
 
 检索工具
 专利汇，中国及多国专利审查
+
+
