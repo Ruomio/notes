@@ -71,7 +71,8 @@ date        |                           Worklog                          |
 6.9         |   与西安SOC讨论方案；改进写入Signal.stil文件逻辑；保存rtdf逻辑完善；参数配置界面完善|
 6.12        |   SignalAndGroup保存方式大改                                  |
 6.13        |   DCSequrnce 保存实现                                     |
-
+6.14        |   TimeSet 保存的实现: 从文件读 并保存到变量Map                |
+6.15        |   TimeSet 保存的实现: 从表格读,并写入文件                     |
 
 ## 周期安排：
 
