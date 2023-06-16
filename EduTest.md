@@ -73,6 +73,7 @@ date        |                           Worklog                          |
 6.13        |   DCSequrnce 保存实现                                     |
 6.14        |   TimeSet 保存的实现: 从文件读 并保存到变量Map                |
 6.15        |   TimeSet 保存的实现: 从表格读,并写入文件; 保存配置信息到成员变量  |
+6.16        |   ACSpec Saving;      out文件夹下自动写入Pattern Master.txt   |
 
 
 
