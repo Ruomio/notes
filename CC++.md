@@ -40,42 +40,66 @@ C++ 17之前必须在.cpp中初始化静态成员才不会出现重定义的错�
 ## I/O 多路复用
 
 ### select
-​	fd_set 使用数组实现  
-​		1.fd_size 有限制 1024 bitmap
-​			fd【i】 = accept()
-​		2.fdset不可重用，新的fd进来，重新创建
-​		3.用户态和内核态拷贝产生开销
-​		4.O(n)时间复杂度的轮询
-​		成功调用返回结果大于 0，出错返回结果为 -1，超时返回结果为 0
-​		具有超时时间
+
+    fd_set 使用数组实现
+    1.fd_size 有限制 1024 bitmap
+			fd【i】 = accept()
+		2.fdset不可重用，新的fd进来，重新创建
+		3.用户态和内核态拷贝产生开销
+		4.O(n)时间复杂度的轮询
+		成功调用返回结果大于 0，出错返回结果为 -1，超时返回结果为 0
+		具有超时时间
 
 ### poll
-​	基于结构体存储fd
-​	struct pollfd{
-​		int fd;
-​		short events;
-​		short revents; //可重用
-​	}
-​	解决了select的1,2两点缺点
+
+    基于结构体存储fd
+	struct pollfd{
+		int fd;
+		short events;
+		short revents; //可重用
+	}
+	解决了select的1,2两点缺点
 
 ### epoll
-​	解决select的1，2，3，4
-​	不需要轮询，时间复杂度为O(1)
-​	epoll_create  创建一个白板 存放fd_events
-​	epoll_ctl 用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上
-​	epoll_wait 通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理，进程调用 epoll_wait() 便可以得到事件完成的描述符
 
-​	两种触发模式：
-​		LT:水平触发
-​			当 epoll_wait() 检测到描述符事件到达时，将此事件通知进程，进程可以不立即处理该事件，下次调用 epoll_wait() 会再次通知进程。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
-​		ET:边缘触发
-​			和 LT 模式不同的是，通知之后进程必须立即处理事件。
-​			下次再调用 epoll_wait() 时不会再得到事件到达的通知。很大程度上减少了 epoll 事件被重复触发的次数，
-​			因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+    解决select的1，2，3，4
+	不需要轮询，时间复杂度为O(1)
+	epoll_create  创建一个白板 存放fd_events
+	epoll_ctl 用于向内核注册新的描述符或者是改变某个文件描述符的状态。已注册的描述符在内核中会被维护在一棵红黑树上
+	epoll_wait 通过回调函数内核会将 I/O 准备好的描述符加入到一个链表中管理，进程调用 epoll_wait() 便可以得到事件完成的描述符
 
+    两种触发模式：
+		LT:水平触发
+			当 epoll_wait() 检测到描述符事件到达时，将此事件通知进程，进程可以不立即处理该事件，下次调用 epoll_wait() 会再次通知进程。是默认的一种模式，并且同时支持 Blocking 和 No-Blocking。
+		ET:边缘触发
+			和 LT 模式不同的是，通知之后进程必须立即处理事件。
+			下次再调用 epoll_wait() 时不会再得到事件到达的通知。很大程度上减少了 epoll 事件被重复触发的次数，
+			因此效率要比 LT 模式高。只支持 No-Blocking，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描述符的任务饿死。
+
+
+## 虚函数与纯虚函数
+```C++
+1、纯虚函数声明如下： virtual void funtion1()=0; 纯虚函数一定没有定义，纯虚函数用来规范派生类的行为，即接口。包含纯虚函数的类是抽象类，抽象类不能定义实例，但可以声明指向实现该抽象类的具体类的指针或引用。
+
+2、虚函数声明如下：virtual ReturnType FunctionName(Parameter) 虚函数必须实现，如果不实现，编译器将报错.
+
+3、对于虚函数来说，父类和子类都有各自的版本。由多态方式调用的时候动态绑定。
+
+4、实现了纯虚函数的子类，该纯虚函数在子类中就变成了虚函数，子类的子类即孙子类可以覆盖该虚函数，由多态方式调用的时候动态绑定。
+
+5、虚函数是C++中用于实现多态(polymorphism)的机制。核心理念就是通过基类访问派生类定义的函数。
+
+6、在有动态分配堆上内存的时候，析构函数必须是虚函数，但没有必要是纯虚的。
+
+7、友元不是成员函数，只有成员函数才可以是虚拟的，因此友元不能是虚拟函数。但可以通过让友元函数调用虚拟成员函数来解决友元的虚拟问题。
+
+8、析构函数应当是虚函数，将调用相应对象类型的析构函数，因此，如果指针指向的是子类对象，将调用子类的析构函数，然后自动调用基类的析构函数。
+```
 
 # 设计模式
+
 ## 常见设计模式
+
 ```txt
 单例模式：确保一个类只有一个实例，并提供全局访问点。
 工厂模式：通过工厂方法创建对象，而无需直接使用 new 关键字。
@@ -90,6 +114,7 @@ C++ 17之前必须在.cpp中初始化静态成员才不会出现重定义的错�
 ```
 
 ## PIMPL
+
 > PIMPL（Pointer to Implementation）是一种设计模式，用于减少类之间的依赖关系和编译时间。它的基本思想是将类的实现细节封装在一个独立的类中，然后将这个类的指针作为类的成员变量来使用，从而达到降低编译时耦合度的目的。
 
 > 具体来说，PIMPL 模式将公共接口与私有实现分离开来。公共接口是一个完整的类定义，而私有实现则是由一个独立的类进行实现，这个独立的类被称为 PIMPL 类。PIMPL 类只能在类的实现文件中引用，在类的头文件中并不可见。这样做可以有效地隐藏内部实现细节，并且在修改实现时不会影响用户代码的编译。
@@ -120,9 +145,12 @@ E --> F["close() <br> 6. 关闭socket连接，释放资源"]
 ```
 
 # String
+
 如果希望在最终读入的字符串中保留空格，可以使用getline函数
-getline(cin , s1); 
+getline(cin , s1);
+
 ## 1.字符串构造函数
+
 ```c++
    string str1;               //生成空字符串
    string str2("123456789");  //生成"1234456789"的复制品
@@ -131,10 +159,13 @@ getline(cin , s1);
    string str5(5, '1');       //结果为"11111"
    string str6(str2, 2);      //结果为"3456789"
 ```
+
 ## 2.string大小和容量
+
 1. size()和length()：返回string对象的字符个数，他们执行效果相同。
 2. max_size()：返回string对象最多包含的字符数，超出会抛出length_error异常
 3. capacity()：重新分配内存之前，string对象能包含的最大字符数
+
 ```C++
    string s("1234567");
    cout << "size=" << s.size() << endl;      //7
@@ -142,14 +173,14 @@ getline(cin , s1);
    cout << "max_size=" << s.max_size() << endl; // 4294967294
    cout << "capacity=" << s.capacity() << endl; // 15
 ```
-## 3.string的字符串比较
-1. C ++字符串支持常见的比较操作符（>,>=,<,<=,==,!=），甚至支持string与C-string的比较(如 str<”hello”)。  
-在使用>,>=,<,<=这些操作符的时候是根据“当前字符特性”将字符按字典顺序进行逐一得 比较。字典排序靠前的字符小，  
-比较的顺序是从前向后比较，遇到不相等的字符就按这个位置上的两个字符的比较结果确定两个字符串的大小(前面减后面)
-同时，string ("aaaa") < string("aaaaa")。    
 
-2. 另一个功能强大的比较函数是成员函数compare()。他支持多参数处理，支持用索引值和长度定位子串来进行比较。 
-  他返回一个整数来表示比较结果，返回值意义如下：0：相等 1：大于 -1：小于 (A的ASCII码是65，a的ASCII码是97)
+## 3.string的字符串比较
+
+1. C ++字符串支持常见的比较操作符（>,>=,<,<=,==,!=），甚至支持string与C-string的比较(如 str<”hello”)。在使用>,>=,<,<=这些操作符的时候是根据“当前字符特性”将字符按字典顺序进行逐一得 比较。字典排序靠前的字符小，比较的顺序是从前向后比较，遇到不相等的字符就按这个位置上的两个字符的比较结果确定两个字符串的大小(前面减后面)
+   同时，string ("aaaa") < string("aaaaa")。
+2. 另一个功能强大的比较函数是成员函数compare()。他支持多参数处理，支持用索引值和长度定位子串来进行比较。
+   他返回一个整数来表示比较结果，返回值意义如下：0：相等 1：大于 -1：小于 (A的ASCII码是65，a的ASCII码是97)
+
 ```c++
    string A("aBcd");
    string B("Abcd");
@@ -170,12 +201,17 @@ getline(cin , s1);
    // "123" 和 "123"比较 
    cout << "C.compare(0, 3, D, 0, 3)" <<C.compare(0, 3, D, 0, 3) << endl;    // 结果：0
 ```
+
 ## 4.string的插入
+
 1. push_back() : 在尾部插入字符
 2. insert(pos, char) : 在 pos前插入字符串char
+
 ## 5.string字符串拼接
+
 1. append() : 尾部加入字符串
 2. + : 尾部加入字符串
+
 ```c++
    // 方法一：append()
    string s1("abc");
@@ -189,8 +225,11 @@ getline(cin , s1);
    s2 += s3.c_str();
    cout<<"s2:"<<s2<<endl; // s2:abcdef
 ```
+
 ## 6.string遍历
+
 迭代器 或者 下标法
+
 ```c++
    string::iterator iter = s1.begin();
    for( ; iter < s1.end() ; iter++)
@@ -199,12 +238,16 @@ getline(cin , s1);
    }
    cout<<endl;
 ```
+
 str[i] / str.at(i);
+
 ## 7.string的删除
+
 1. iterator erase(iterator p);//删除字符串中p所指的字符
-2. iterator erase(iterator first, iterator last);//删除字符串中迭代器区间`[first,last)`上所有字符  左闭右开
+2. iterator erase(iterator first, iterator last);//删除字符串中迭代器区间 `[first,last)`上所有字符  左闭右开
 3. string& erase(size_t pos = 0, size_t len = npos);//删除字符串中从索引位置pos开始的len个字符
 4. void clear();//删除字符串中所有字符
+
 ```c++
     string s1 = "123456789";
 
@@ -214,10 +257,13 @@ str[i] / str.at(i);
     s1.erase(1,6);                       // 结果：189
     string::iterator iter = s1.begin();
 ```
+
 ## 8.string的字符替换
+
 1. string& replace(size_t pos, size_t n, const char *s);//将当前字符串从pos索引开始的n个字符，替换成字符串s
 2. string& replace(size_t pos, size_t n, size_t n1, char c); //将当前字符串从pos索引开始的n个字符，替换成n1个字符c
-3. string& replace(iterator i1, iterator i2, const char* s);//将当前字符串`[i1,i2)`区间中的字符串替换为字符串s
+3. string& replace(iterator i1, iterator i2, const char* s);//将当前字符串 `[i1,i2)`区间中的字符串替换为字符串s
+
 ```c++
     string s1("hello,world!");
 
@@ -232,7 +278,9 @@ str[i] / str.at(i);
 ```
 
 ## 9.string大小写替换
+
 1. tolower(); toupper();
+
 ```c++
    string s = "ABCDEFG";
 
@@ -241,37 +289,63 @@ str[i] / str.at(i);
       s[i] = tolower(s[i]);
    }
 ```
+
 2. STL的transform算法配合的toupper和tolower
+
 ```c++
     string s = "ABCDEFG";
     string result;
 
     transform(s.begin(),s.end(),s.begin(),::tolower);
 ```
+
 ## 10.string的查找
+
 1. size_t find (constchar* s, size_t pos = 0) const;
 //在当前字符串的pos索引位置开始，查找子串s，返回找到的位置索引，-1表示查找不到子串
+//在当前字符串的pos索引位置开始，查找子串s，返回找到的位置索引，-1表示查找不到子串
+
+   //在当前字符串的pos索引位置开始，查找子串s，返回找到的位置索引，-1表示查找不到子串
 
 2. size_t find (charc, size_t pos = 0) const;
 //在当前字符串的pos索引位置开始，查找字符c，返回找到的位置索引，-1表示查找不到字符
+//在当前字符串的pos索引位置开始，查找字符c，返回找到的位置索引，-1表示查找不到字符
+
+   //在当前字符串的pos索引位置开始，查找字符c，返回找到的位置索引，-1表示查找不到字符
 
 3. size_t rfind (constchar* s, size_t pos = npos) const;
 //在当前字符串的pos索引位置开始，反向查找子串s，返回找到的位置索引，-1表示查找不到子串
+//在当前字符串的pos索引位置开始，反向查找子串s，返回找到的位置索引，-1表示查找不到子串
+
+   //在当前字符串的pos索引位置开始，反向查找子串s，返回找到的位置索引，-1表示查找不到子串
 
 4. size_t rfind (charc, size_t pos = npos) const;
 //在当前字符串的pos索引位置开始，反向查找字符c，返回找到的位置索引，-1表示查找不到字符
+//在当前字符串的pos索引位置开始，反向查找字符c，返回找到的位置索引，-1表示查找不到字符
+
+   //在当前字符串的pos索引位置开始，反向查找字符c，返回找到的位置索引，-1表示查找不到字符
 
 5. size_tfind_first_of (const char* s, size_t pos = 0) const;
 //在当前字符串的pos索引位置开始，查找子串s的字符，返回找到的位置索引，-1表示查找不到字符
+//在当前字符串的pos索引位置开始，查找子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+   //在当前字符串的pos索引位置开始，查找子串s的字符，返回找到的位置索引，-1表示查找不到字符
 
 6. size_tfind_first_not_of (const char* s, size_t pos = 0) const;
 //在当前字符串的pos索引位置开始，查找第一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+//在当前字符串的pos索引位置开始，查找第一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+   //在当前字符串的pos索引位置开始，查找第一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
 
 7. size_t find_last_of(const char* s, size_t pos = npos) const;
 //在当前字符串的pos索引位置开始，查找最后一个位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+//在当前字符串的pos索引位置开始，查找最后一个位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
+
+   //在当前字符串的pos索引位置开始，查找最后一个位于子串s的字符，返回找到的位置索引，-1表示查找不到字符
 
 8. size_tfind_last_not_of (const char* s, size_t pos = npos) const;
-//在当前字符串的pos索引位置开始，查找最后一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到子串
+   //在当前字符串的pos索引位置开始，查找最后一个不位于子串s的字符，返回找到的位置索引，-1表示查找不到子串
+
 ```c++
     string s("dog bird chicken bird cat");
 
@@ -305,40 +379,51 @@ str[i] / str.at(i);
 ```
 
 ## 11.string的排序 sort(s.begin(),s.end())
+
 ```c++
     string s = "cdefba";
     sort(s.begin(),s.end());
     cout<<"s:"<<s<<endl;     // 结果：abcdef
 ```
+
 ## 12.string的分割/截取 strtok() / substr()
+
 1. strtok()
+
 ```c++
     char str[] = "I,am,a,student; hello world!";
 
     const char *split = ",; !";
     char *p2 = strtok(str,split);
 ```
+
 2. substr()
+
 ```c++
     string s1("0123456789");
     string s2 = s1.substr(2,5); // 结果：23456-----参数5表示：截取的字符串的长度
 ```
 
 ## 13. string char 转换
+
 将数值 val 转换为 string 。val 可以是任何算术类型（int、浮点型等）。
 `string s = to_string(val)`
 
 ## 14. string reverse反转
+
 reverse(str.begin(),str.end());
 reverse还可用于数组 reverse(array, array+arrat.lenth())
 STL任何容器都可以。
 
 ## sscanf(const char *str, const char *format, ...);
+
 ```c++
 int converted = sscanf("20191103", "%04d%02d%02d", &year, &month, &day);
 printf("converted=%d, year=%d, month=%d, day=%d/n", converted, year, month, day);
 ```
+
 ## string 转 time_t
+
 ```c++
 //linux下存储时间常见的有两种存储方式，一个是从1970年到现在经过了多少秒，一个是用一个结构来分别存储年月日时分秒的。
 //time_t 这种类型就是用来存储从1970年到现在经过了多少秒，要想更精确一点，可以用结构struct timeval，它精确到微妙。
@@ -368,7 +453,9 @@ time_t  time1 = time(NULL);//获取系统时间，单位为秒;
 tm* t = localtime(&time1); //将换取的time_t时间转换为 struct tm
 
 ```
+
 ### 常用函数
+
 ```c++
 time_t time(time_t *t); //取得从1970年1月1日至今的秒数  
 char *asctime(const struct tm *tm); //将结构中的信息转换为真实世界的时间，以字符串的形式显示  
@@ -381,11 +468,14 @@ double difftime(time_t time1, time_t time2); //返回两个时间相差的秒数
 ```
 
 ## 绝对值，随机数
+
 * abs(). fabs() : 分别用于整数和浮点数取绝对值
 * rand() : 返回非负整数
-  
+
 # 文件操作
+
 ## C
+
 文件的打开
 fopen()：打开文件
 文件的关闭
@@ -404,7 +494,6 @@ fscanf()：格式化读取数据
 fread()：读取数据   size_t fread ( void * ptr, size_t size, size_t count, FILE * stream );
 fwrite()：写入数据  size_t fwrite ( const void * ptr, size_t size, size_t count, FILE * stream );
 
-
 文件状态检查
 feof()：文件是否结束
 ferror()：文件读/写是否出错
@@ -415,14 +504,15 @@ ftell()：文件指针的当前位置
 rewind()：把文件指针移到开始处
 fseek()：重定位文件指针
 
-
 ## C++
+
 输出流：ostream (output stream)
 输出流：istream (input stream)
 输入输出流：iostream
 写操作（输出）的文件类：ofstream
 读操作（输入）的文件类：ifstream
 可同时读写操作的文件类：fstream (file stream)
+
 ```c++
 //对文件的读取示例
 #include <iostream>
@@ -447,12 +537,13 @@ int main ()
 ```
 
 # STL容器
+
 需要引入相应的头文件
-1 vector<int>vec;//定义vector,常用
-2 list<int>lis;
-3 deque<int>deq;
-4 stack<int>sta;//定义栈,常用
-5 queue<int>que;//定义栈,常用
+1 vector`<int>`vec;//定义vector,常用
+2 list`<int>`lis;
+3 deque`<int>`deq;
+4 stack`<int>`sta;//定义栈,常用
+5 queue`<int>`que;//定义栈,常用
 
 ```c++
 //vector的定义
@@ -493,7 +584,9 @@ operator[]       　　　　　返回容器中指定位置的一个引用。
 ```
 
 # 二位数组
+
 数组指针 != 指针数组
+
 ```c++
     // [] 优先级比 * 高
     int (*p)[3] = new int[3][3];
@@ -503,25 +596,21 @@ operator[]       　　　　　返回容器中指定位置的一个引用。
     void matrix_mutifly(int (*A)[10], int (*B)[10], int (*C)[10]){}
 ```
 
-
 # C++ 父类与子类指针强行转换
+
 1. 静态类型检查失效：在编译时，编译器只能检查指针的静态类型，而不能检查指针所指向对象的动态类型。因此，如果将一个父类指针强制转换为子类指针，但实际指向的对象不是子类对象，那么在运行时可能会发生未定义行为，如访问非法内存地址、引起段错误等。
-
 2. 数据截断：由于子类对象可能比父类对象更大，因此将子类指针强制转换为父类指针可能会导致数据截断。例如，如果一个子类对象有一个额外的成员变量，但将其强制转换为父类指针，那么访问该成员变量可能会导致未定义行为。
-
 3. 对象切片：当将子类对象赋值给父类对象时，只会复制父类部分的成员变量，而子类部分的成员变量将被忽略。这种现象被称为“对象切片”，可能会导致程序错误。
 
 因此，应该避免在 C++ 中进行父类和子类指针之间的强制类型转换，或者在进行转换之前进行动态类型检查，以确保指针所指向的对象的动态类型与转换后的类型相同。
 
 # 调用DLL文件
+
 在C++中调用DLL文件，可以使用以下步骤：
 
 1. 在C++代码中包含Windows.h头文件。
-
 2. 使用LoadLibrary函数加载DLL文件。该函数返回一个句柄，可以用于后续的函数调用。
-
 3. 使用GetProcAddress函数获取DLL文件中的函数地址。该函数需要传递DLL文件的句柄和函数名。
-
 4. 将获取的函数地址转换为函数指针，并调用该函数。可以使用typedef来定义函数指针类型，以便更方便地调用函数。
 
 下面是一个简单的示例代码，演示如何在C++中调用DLL文件中的函数：
@@ -559,26 +648,17 @@ int main()
 
 在上面的示例代码中，我们首先使用LoadLibrary函数加载了一个名为MyDll.dll的DLL文件。然后使用GetProcAddress函数获取了该文件中名为Add的函数的地址，并将其转换为函数指针类型AddFunc。最后，我们调用了该函数并输出了结果。最后使用FreeLibrary函数卸载了DLL文件。
 
-
 # C++特性
+
 C++ 是一种面向对象的编程语言，它具有以下特性：
 
 1. 面向对象：C++ 支持面向对象的编程范式，包括封装、继承和多态。
-
 2. 泛型编程：C++ 支持泛型编程，可以使用模板来实现通用的数据类型和算法。
-
 3. 高效性：C++ 是一种高效的语言，它可以直接操作内存，而不需要通过虚拟机或解释器来执行代码。
-
 4. 多重继承：C++ 支持多重继承，可以从多个基类中继承属性和方法。
-
 5. 强类型：C++ 是一种强类型语言，可以在编译时检查类型错误。
-
 6. 高级内存管理：C++ 允许程序员直接管理内存，包括动态分配和释放内存。
-
 7. 运算符重载：C++ 允许程序员重载运算符，可以自定义对象之间的运算。
-
 8. 内联函数：C++ 支持内联函数，可以将函数的代码直接插入到调用它的地方，提高执行效率。
-
 9. 异常处理：C++ 支持异常处理，可以在程序出现异常时进行处理。
-
 10. 标准库：C++ 标准库提供了丰富的函数和类，包括容器、算法、输入输出和字符串处理等。
