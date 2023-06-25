@@ -76,6 +76,8 @@ date        |                           Worklog                          |
 6.16        |   ACSpec Saving;      out文件夹下自动写入Pattern Master.txt   |
 6.19        |   阅读 Shmoo Margin源码                                       |
 6.20        |   更改所有的路径获取方式   ，清楚与AITest的交互方式               |
+6.21        |   与lepo沟通，知晓aitest的消息交互方式                        |
+
 
 
 
@@ -138,9 +140,49 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 2.4.0_p2 version
 searching 功能 hosea交流
 
+消息发送机制:gxSequence->callJobTask, gxSequence->PostSequence
+> 说明文档
+>
+> IWXSeqence.h 
+>
+> esxOasisData.h 
+
+```cpp
+// 要先在SequenceId.h的枚举中新填一个成员
+enum UXSEQUENCE_TYPE {
+    // 原先的不动
+
+    WM_USER     // 新增
+}    
+
+// 仅以Margin为例 假设成员都在类A中
+
+void A::MsgConnect()
+{
+    Connect2GUI(WM_USER, m_hWnd);
+     gxGlobalData->SetTaskHwnd(m_hWnd);
+
+}
+
+BEGIN_MESSAGE_MAP(A, CWnd)
+    ON_WXOS_MESSAGE(WM_USER, showWindow)
+END_MESSAGE_MAP()
+
+void A::showWindow(WPARAM wParam, LPARAM lParam){
+
+    func_Open_Margin_Window();
+
+}
 
 
+// 需要实现显示Margin窗口的函数
 
+void B::BtnOpenMargin(){
+
+    gxSequence->GenerateBasic(WM_USER, 0, 0);
+
+}
+```
 
 ## RTDFViewer 
 AITest 只有测试结果导出的rtdf：

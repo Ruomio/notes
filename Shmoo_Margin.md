@@ -299,3 +299,58 @@ SetDCVariableMode(): 设置直流变量模式。首先检查是否加载了作�
 
 OnCbnSelchangeComboAlgorithmShmoo(): 当"ComboAlgorithmShmoo"下拉框的选择改变时调用。首先通过UpdateData(TRUE)将用户界面的数据更新到对应的成员变量中。然后根据当前选择的算法类型进行不同的操作。如果选择的算法类型为2，则将m_nMode和m_nSkip设置为0，并禁用"ComboModeShmoo"和"EditSkip"控件。否则，启用这两个控件。最后通过UpdateData(FALSE)将成员变量的值更新到用户界面上。
 ```
+
+
+#pragma once
+#define MARGINCONTROL_CLASSNAME    _T("MFCMarginControlCtrl")  // Window class name
+
+#include "CMarginControl.h"
+
+#include <vector>
+#include <string>
+#include <UXDataStructure.h>
+#include <QPainter>
+
+
+class MarginData
+{
+public:
+	MarginData(int sitecount, unsigned int* tdut, int indivisual);
+	~MarginData();
+	void SetSignalName(const char* signame, const char* settingsignal);
+	void SetItemName(const TCHAR* item);
+	void SetRangeData(double start, double end, double step);
+	QString GetValue(double value);
+	void SetRectangle(const QRect& rect);
+	void OffsetRectangle(int height);
+	void SetProgrammedValue(double value);
+	QRect GetRectangle() const;
+	void Draw(QPainter* pDC);
+	void DrawMark(QPainter* pDC, const QPoint& pt);
+	void DrawBackground(QPainter* pDC);
+	void StoreData(QPainter* pDC, int x, const char* p);
+	BOOL IsContains(const QPoint& pt);
+	void SaveData(FILE* out);
+	void SetSelectedDut(int dut);
+	void SetUnit(const QString& strUnit, double div);
+	void ChangeProgramValue(const QPoint& pt, const char* szTimeset, const char* szWfc, const char* szEdge);
+
+private:
+	QString _TsName;
+	QString _SigSetting;
+	QRect   _GlobalRc;
+	int     _SelectedDut;
+	int     _w;
+	int     _num;
+	TCHAR   _unit[5];
+	TCHAR   _szItem[MAX_NAME_SIZE];
+	double  _unitdiv;
+	double  _begin;
+	double  _end;
+	double  _interval;
+	double  _OrgValue;
+	int     m_nSiteCount;
+	int     _indivisual;
+	vector<char>  _result[32];
+	unsigned int*        _pTestDut;
+};
