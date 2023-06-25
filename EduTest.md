@@ -77,7 +77,7 @@ date        |                           Worklog                          |
 6.19        |   阅读 Shmoo Margin源码                                       |
 6.20        |   更改所有的路径获取方式   ，清楚与AITest的交互方式               |
 6.21        |   与lepo沟通，知晓aitest的消息交互方式                        |
-
+6.25        |   将shmoo margin并入项目, 向winter要有关依赖文件              |
 
 
 
@@ -135,6 +135,7 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 21. - [] 参数配置 提供 导入CSV功能
 22. - [] 显示之前填入的数据
 23. - [] shmoo margin 的可执行文件
+24. - [] 功能树，到excel标注时间。
 
 ### shmoo margin 功能模块
 2.4.0_p2 version
@@ -183,6 +184,59 @@ void B::BtnOpenMargin(){
 
 }
 ```
+
+
+```C++
+void make_margin_organicdata(COasisData* pOrganic, MARGIN_ARGUMENT& margindata, int bOutPinMargin)
+{
+	// Common
+	pOrganic->SetAString(margindata.title);
+	for (int n = 0; n < 8; n++)
+		pOrganic->SetInt(margindata.dut[n]);
+	pOrganic->SetInt(margindata.individual);
+	pOrganic->SetInt(margindata.stepbystep);
+	pOrganic->SetInt(margindata.sequence);
+	pOrganic->SetInt(margindata.orgin);
+	pOrganic->SetInt(margindata.algorythm);
+	pOrganic->SetInt(margindata.skip);
+	pOrganic->SetDouble(margindata.udelay);
+	pOrganic->SetAString(margindata.measSignal);
+
+	// Axis
+	pOrganic->SetAString(margindata.axis.szSetname);
+	pOrganic->SetAString(margindata.axis.szType);
+	pOrganic->SetAString(margindata.axis.szTimeset);
+	pOrganic->SetAString(margindata.axis.szWFC);
+	pOrganic->SetAString(margindata.axis.szEDGE);
+	pOrganic->SetAString(margindata.axis.szSignal);
+	pOrganic->SetDouble(margindata.axis.start);
+	pOrganic->SetDouble(margindata.axis.end);
+	pOrganic->SetDouble(margindata.axis.interval);
+
+	// OutPin Margin
+	pOrganic->SetInt(bOutPinMargin);
+}
+
+
+OASISHEAD head = { JOB_SC_EXEC, JOB_FC_EXEC_MARGIN, };
+COasisData Organic(300, 300);
+Organic.SetHead(&head);
+// make_margin_organicdata(&Organic, marginArgument, dlg.m_bOutPinMargin == TRUE ? 1 : 0);	// 先不赋值
+Organic.SetSize();
+// m_Margin.SetUnit(AtoTS(m_AxisData.szEnd));
+
+void* pResponse = NULL;
+gxSequence->CallJobTask(Organic.GetPtr(), Organic.GetLength(), &pResponse);
+if (pResponse) {
+	free(pResponse);
+}
+
+```
+
+需要头文件: TWM.h, TextInputDialog.h, WFCEditCtrl.h, EdgeEditCtrl.h, FloatEditCtrl.h, ComboBoxBold.h, TitleMenu.h, 
+
+
+
 
 ## RTDFViewer 
 AITest 只有测试结果导出的rtdf：
