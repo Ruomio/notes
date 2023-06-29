@@ -78,7 +78,7 @@ date        |                           Worklog                          |
 6.20        |   更改所有的路径获取方式   ，清楚与AITest的交互方式               |
 6.21        |   与lepo沟通，知晓aitest的消息交互方式                        |
 6.25        |   将shmoo margin并入项目, 向winter要有关依赖文件              |
-6.26-       |                                                           |
+6.26-6.29   |   Shmoo 与 Margin 功能得集成                                 |
 
 
 ## 全局变量
@@ -97,26 +97,26 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 
 ## Requirement
 
-1. [x] 不需要切换用户
-2. [x] 不需要 基本信息显示
-3. [x] 卸载flow
-4. [x] 关闭按钮
-5. [x] 更改名称
-6. [x] 停止测试 logo
-7. [x] pause <- 停止icon
-8. [x] 全项测试 <- override
-9. [x] 格式转换 -> 向量转换
-10. [x] pause -> 状态保持
-11. [x] 状态栏 修改 
-12. [x] logo
-13. [x] 右上角picture
-14. [x] logo 主改掉
+1. - [x] 不需要切换用户
+2. - [x] 不需要 基本信息显示
+3. - [x] 卸载flow
+4. - [x] 关闭按钮
+5. - [x] 更改名称
+6. - [x] 停止测试 logo
+7. - [x] pause <- 停止icon
+8. - [x] 全项测试 <- override
+9. - [x] 格式转换 -> 向量转换
+10. - [x] pause -> 状态保持
+11. - [x] 状态栏 修改 
+12. - [x] logo
+13. - [x] 右上角picture
+14. - [x] logo 主改掉- 
 
-1. [x] channelmap 拿掉
-2. [x] 菜单栏 工具栏 协调
-3. [x] flow位置显示
-4. X 快速模式 学习模式
-5. X 一行一个测试项, 只允许模范方式
+1. - [x] channelmap 拿掉
+2. - [x] 菜单栏 工具栏 协调
+3. - [x] flow位置显示
+4. - X 快速模式 学习模式
+5. - X 一行一个测试项, 只允许模范方式
 6. - [x] 配置文件 和 cpp 分开界面
 7. - [x] wxflow留一套入口
 8. - [x] tdr 位置放到菜单栏
@@ -128,14 +128,14 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 14. - [x] 更改名称 去掉
 15. - [x] 删除测试项， 给出确认提示
 16. - [x] 当前项目
-17. - [] 联系burce,需要一些exe
+17. - [ ] 联系burce,需要一些exe
 18. - [x] 参数配置表 新增测试项
 19. - [x] rtdfViewer 无法读取问题
-20. DCSpec Param, ACSpec Param
-21. - [] 参数配置 提供 导入CSV功能
-22. - [] 显示之前填入的数据
-23. - [] shmoo margin 的可执行文件
-24. - [] 功能树，到excel标注时间。
+20. - [x] DCSpec Param, ACSpec Param
+21. - [ ] 参数配置 提供 导入CSV功能
+22. - [ ] 显示之前填入的数据
+23. - [x] shmoo margin 的可执行文件
+24. - [x] 功能树，到excel标注时间。
 
 ### shmoo margin 功能模块
 2.4.0_p2 version

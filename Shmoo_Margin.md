@@ -354,3 +354,117 @@ private:
 	vector<char>  _result[32];
 	unsigned int*        _pTestDut;
 };
+
+
+
+
+
+
+
+
+
+# Qt MFC
+## Qt中的调用代码:
+```C++
+connect(ui.actionMargin, &QAction::triggered, this, [=](){
+	if(!cMarginWindow){
+		cMarginWindow = new CMarginWindow();
+		MFCWindow mfcWindow;
+		mfcWindow.setMFCInstance((CWnd*)cMarginWindow);
+		mfcWindow.raise();
+		mfcWindow.show();
+	}
+	else{
+		MFCWindow mfcWindow;
+		mfcWindow.setMFCInstance((CWnd*)cMarginWindow);
+		mfcWindow.raise();
+		mfcWindow.show();
+	}
+});
+```
+
+## 自定义中间类
+头文件 MFCViewClass.h
+```C++
+#pragma once
+
+#include <WinSock2.h>
+#include <afxwin.h>
+
+#include <QtWinExtras/QtWin>
+#include <QtGui/QWindow>
+#include <QVBoxLayout>
+
+
+class MFCWidget : public QWidget
+{
+public:
+    MFCWidget(QWidget *parent = nullptr);
+
+    void setMFCInstance(CWnd* mfcInstance);
+
+    ~MFCWidget();
+
+private:
+    CWnd* m_mfcInstance;
+};
+
+// 在Qt的窗口中使用MFCWidget
+class MFCWindow : public QWidget
+{
+public:
+    MFCWindow(QWidget *parent = nullptr);
+
+    void setMFCInstance(CWnd* mfcInstance);
+private:
+    MFCWidget *m_mfcWidget;
+};
+```
+
+源文件 MFCViewClass.cpp
+```C++
+#include "MFCViewClass.h"
+
+MFCWidget::MFCWidget(QWidget *parent)
+    : QWidget(parent), m_mfcInstance(nullptr)
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    setLayout(layout);
+}
+
+void MFCWidget::setMFCInstance(CWnd* mfcInstance)
+{
+    m_mfcInstance = mfcInstance;
+
+    if (m_mfcInstance)
+    {
+        // 设置 MFC 实例的父窗口为 QWidget
+        m_mfcInstance->SetParent(CWnd::FromHandle((HWND)winId()));
+        CRect rect(0,0,640,480);
+        GetClientRect((HWND)winId(), &rect);
+        m_mfcInstance->MoveWindow(rect);
+        m_mfcInstance->ShowWindow(SW_SHOW);
+    }
+}
+
+MFCWidget::~MFCWidget()
+{
+}
+
+
+MFCWindow::MFCWindow(QWidget *parent)
+    : QWidget(parent), m_mfcWidget(nullptr)
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    setLayout(layout);
+}
+
+void MFCWindow::setMFCInstance(CWnd* mfcInstance)
+{
+    m_mfcWidget = new MFCWidget(this);
+    m_mfcWidget->setMFCInstance(mfcInstance);
+    layout()->addWidget(m_mfcWidget);
+}
+```
