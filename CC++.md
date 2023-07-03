@@ -96,6 +96,66 @@ C++ 17之前必须在.cpp中初始化静态成员才不会出现重定义的错�
 8、析构函数应当是虚函数，将调用相应对象类型的析构函数，因此，如果指针指向的是子类对象，将调用子类的析构函数，然后自动调用基类的析构函数。
 ```
 
+## lib,Dll
+### DLL
+1. 静态调用
+```C++
+
+// 先将lib与dll导入项目
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <Windows.h>
+
+#pragma comment(lib,"DLLTest1.lib")
+
+extern "C" int add(int a, int b);
+
+// 静态调用DLL库
+void StaticUse()
+{
+	int sum = add(10, 20);
+	printf("静态调用，sum = %d\n", sum);
+}
+
+```
+
+2. 动态调用
+```C++
+void DynamicUse()
+{
+    // 运行时加载DLL库
+	HMODULE module = LoadLibrary("DLLTest1.dll");
+	if (module == NULL)
+	{
+		printf("加载DLLTest1.dll动态库失败\n");
+		return;
+	}
+	typedef int(*AddFunc)(int, int); // 定义函数指针类型
+	AddFunc add; 
+    // 导出函数地址
+	add = (AddFunc)GetProcAddress(module, "add");
+
+	int sum  = add(100, 200);
+	printf("动态调用，sum = %d\n",sum);
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 设计模式
 
 ## 常见设计模式

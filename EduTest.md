@@ -79,7 +79,8 @@ date        |                           Worklog                          |
 6.21        |   与lepo沟通，知晓aitest的消息交互方式                        |
 6.25        |   将shmoo margin并入项目, 向winter要有关依赖文件              |
 6.26-6.29   |   Shmoo 与 Margin 功能得集成                                 |
-
+6.30		|	Shmoo与Margin 工具栏图标									|
+7.2			|	ChannelMap与Signals的表格导出为JSON文件						|
 
 ## 全局变量
 Signals , vector中的文件名, 所有STIL文件名
