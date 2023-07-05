@@ -79,15 +79,15 @@ date        |                           Worklog                          |
 6.21        |   与lepo沟通，知晓aitest的消息交互方式                        |
 6.25        |   将shmoo margin并入项目, 向winter要有关依赖文件              |
 6.26-6.29   |   Shmoo 与 Margin 功能得集成                                 |
-6.30		|	Shmoo与Margin 工具栏图标									|
+6.30        |   Shmoo与Margin 工具栏图标                                    |
 
 
 ### 7月
 date        |                           Worklog                          |
 | --------- |:----------------------------------------------------------:|
-7.3			|	ChannelMap与Signals的表格导出为JSON文件					   |
-7.4			|	DCExec PatternExec DCLevel 导出Json						 |
-7.5			|	上午去车间组装. DCSpec导出Json文件						   |
+7.3         |	ChannelMap与Signals的表格导出为JSON文件                    |
+7.4         |	DCExec PatternExec DCLevel 导出Json                      |
+7.5         |	上午去车间组装. DCSpec,DCSquence导出Json文件                |
 
 
 ## 全局变量
