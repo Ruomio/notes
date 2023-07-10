@@ -143,6 +143,23 @@ void DynamicUse()
 ```
 
 
+## 智能指针
+### Qt
+> 在Qt中，可以使用QSharedPointer和QScopedPointer两种智能指针来管理内存。
+
+> QSharedPointer是一种引用计数智能指针，它可以在多个对象之间共享所有权，并且可以自动释放内存。你可以通过QSharedPointer的构造函数来创建一个智能指针，例如：
+
+> `QSharedPointer<QLabel> label(new QLabel("Hello, Qt!"));`
+
+> 在这个示例中，我们创建了一个QLabel对象，并将它传递给QSharedPointer的构造函数。QSharedPointer会自动管理QLabel对象的内存，直到它的引用计数为0时自动释放内存。
+
+> QScopedPointer是一种独占智能指针，它可以在对象不再被需要时自动释放内存。与QSharedPointer不同，QScopedPointer不能共享所有权，每个对象只能有一个QScopedPointer指向它。你可以通过QScopedPointer的构造函数来创建一个智能指针，例如：
+
+> `QScopedPointer<QLabel> label(new QLabel("Hello, Qt!"));`
+
+> 在这个示例中，我们创建了一个QLabel对象，并将它传递给QScopedPointer的构造函数。QScopedPointer会自动管理QLabel对象的内存，直到它不再被需要时自动释放内存。
+
+> 需要注意的是，智能指针不能解决所有内存管理问题，例如循环引用等问题。在使用智能指针时，你仍然需要谨慎处理内存管理问题，避免出现内存泄漏和内存错误。
 
 
 
@@ -203,6 +220,17 @@ C --> D["accept() <br> 4. 接受客户端的连接"]
 D --> E["recv()/send() <br> 5. 接收/发送数据"]
 E --> F["close() <br> 6. 关闭socket连接，释放资源"]
 ```
+
+
+
+
+
+
+
+
+
+
+
 
 # String
 

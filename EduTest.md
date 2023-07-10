@@ -85,9 +85,11 @@ date        |                           Worklog                          |
 ### 7月
 date        |                           Worklog                          |
 | --------- |:----------------------------------------------------------:|
-7.3         |	ChannelMap与Signals的表格导出为JSON文件                    |
-7.4         |	DCExec PatternExec DCLevel 导出Json                      |
-7.5         |	上午去车间组装. DCSpec,DCSquence导出Json文件                |
+7.3         |   ChannelMap与Signals的表格导出为JSON文件                    |
+7.4         |   DCExec PatternExec DCLevel 导出Json                      |
+7.5         |   上午去车间组装. DCSpec,DCSquence导出Json文件                |
+7.6         |   TimeSet导出json                                          |
+7.10        |   从json导入ChannelMap                                    | 
 
 
 ## 全局变量
