@@ -89,7 +89,8 @@ date        |                           Worklog                          |
 7.4         |   DCExec PatternExec DCLevel 导出Json                      |
 7.5         |   上午去车间组装. DCSpec,DCSquence导出Json文件                |
 7.6         |   TimeSet导出json                                          |
-7.10        |   从json导入ChannelMap                                    | 
+7.10        |   从json导入ChannelMap   SignalAndGroup                    | 
+7.11        |   从json导入DCExec PatternExec DCLevel                    |
 
 
 ## 全局变量
