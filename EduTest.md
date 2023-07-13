@@ -87,10 +87,20 @@ date        |                           Worklog                          |
 | --------- |:----------------------------------------------------------:|
 7.3         |   ChannelMap与Signals的表格导出为JSON文件                    |
 7.4         |   DCExec PatternExec DCLevel 导出Json                      |
-7.5         |   上午去车间组装. DCSpec,DCSquence导出Json文件                |
+7.5         |   上午去车间组装. DCSpec,DCSquence导出Json文件               |
 7.6         |   TimeSet导出json                                          |
 7.10        |   从json导入ChannelMap   SignalAndGroup                    | 
-7.11        |   从json导入DCExec PatternExec DCLevel                    |
+7.11        |   从json导入DCExec PatternExec DCLevel                     |
+7.12-7.13   |   写文档;    DCSpec/DCSeq/Timeset import from json         |
+
+
+## EduTest文档
+模块编号：
+模块名称：
+输入：
+处理：
+算法描述：
+输出：
 
 
 ## 全局变量

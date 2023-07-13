@@ -16,6 +16,10 @@ B区院校：
 ## wsl 2
 netsh winsock reset
 
+查看wsl:`wsl --list --verbose`
+关闭: wsl -t <wslname>
+开启: power中 bash
+
 ## HMCl
 
 方块传说服务器ip：mcfkcs.com:12345
