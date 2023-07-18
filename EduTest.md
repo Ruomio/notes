@@ -92,7 +92,17 @@ date        |                           Worklog                          |
 7.10        |   从json导入ChannelMap   SignalAndGroup                    | 
 7.11        |   从json导入DCExec PatternExec DCLevel                     |
 7.12-7.13   |   写文档;    DCSpec/DCSeq/Timeset import from json         |
+7.14 7.17   |   解决ACSpec的顺序问题      所有table的清除功能              |
+7.18        |   解决若干bug                                             |
 
+## bugs
+1. - [x] channelMap更新时刻
+2. - [x] 填表省略 统一一下
+3. - [ ] 每个按钮是否绑定了同一个对象
+4. - [x] DCSeq写入顺序不对  ???
+5. - [ ] 点击dialog后显示的是父级界面
+6. - [ ] pattern save 空表终止
+7. - [ ] back delete ctrl+s 保存等按键响应
 
 ## EduTest文档
 模块编号：
@@ -150,14 +160,18 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 14. - [x] 更改名称 去掉
 15. - [x] 删除测试项， 给出确认提示
 16. - [x] 当前项目
-17. - [ ] 联系burce,需要一些exe
+17. - [x] 联系burce,需要一些exe
 18. - [x] 参数配置表 新增测试项
 19. - [x] rtdfViewer 无法读取问题
 20. - [x] DCSpec Param, ACSpec Param
-21. - [ ] 参数配置 提供 导入CSV功能
-22. - [ ] 显示之前填入的数据
+21. - [x] 参数配置 提供 导入CSV功能(JSON)
+22. - [x] 显示之前填入的数据
 23. - [x] shmoo margin 的可执行文件
 24. - [x] 功能树，到excel标注时间。
+25. - [ ] 向量转换
+26. - [ ] ACSpec, Pattern import from json
+27. - [ ] Clear 清除表格数据功能
+28. - [ ] ACSpec 变量先后顺序问题
 
 ### shmoo margin 功能模块
 2.4.0_p2 version

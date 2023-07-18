@@ -416,3 +416,13 @@ ffmpeg -i test.mp4 -i test.mp3 -c copy out.mp4
 
 总之，写进小括号 () 的作用是将括号内的模式定义为一个捕获组，可以在后续操作中使用该捕获组进行引用和处理。
 ```
+
+
+# Clang LLVM
+查找默认include 路径
+clang++ -c file.cc -v 编译将打印出其他内容:
+```shell
+#include "..." search starts here:
+#include <...> search starts here:
+/usr/bin/../lib/gcc/x86_64-linux-gnu/4.9/../../../../include/c++/4.9
+```
