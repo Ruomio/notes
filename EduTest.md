@@ -94,15 +94,19 @@ date        |                           Worklog                          |
 7.12-7.13   |   写文档;    DCSpec/DCSeq/Timeset import from json         |
 7.14 7.17   |   解决ACSpec的顺序问题      所有table的清除功能              |
 7.18        |   解决若干bug                                             |
+7.19        |   操作手册  删除默认stil  编译前清除 *.gz                     |
 
 ## bugs
 1. - [x] channelMap更新时刻
 2. - [x] 填表省略 统一一下
 3. - [ ] 每个按钮是否绑定了同一个对象
 4. - [x] DCSeq写入顺序不对  ???
-5. - [ ] 点击dialog后显示的是父级界面
-6. - [ ] pattern save 空表终止
+5. - [x] 点击dialog后显示的是父级界面
+6. - [x] pattern save 空表终止
 7. - [ ] back delete ctrl+s 保存等按键响应
+8. - [ ] 写完vector  要修改 patternExec 中的Include
+9. - [x] 新工程 要删除默认的stil文件 signal.stil exec.stil timing.stil vector/vector.stil
+10. - [x] 编译前清理out文件夹下文件
 
 ## EduTest文档
 模块编号：
