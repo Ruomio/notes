@@ -94,7 +94,7 @@ date        |                           Worklog                          |
 7.12-7.13   |   写文档;    DCSpec/DCSeq/Timeset import from json         |
 7.14 7.17   |   解决ACSpec的顺序问题      所有table的清除功能              |
 7.18        |   解决若干bug                                             |
-7.19        |   操作手册  删除默认stil  编译前清除 *.gz                     |
+7.19        |   操作手册  删除默认stil  编译前清除 *.gz  新增pattern后 更新PatternExec的include |
 
 ## bugs
 1. - [x] channelMap更新时刻
