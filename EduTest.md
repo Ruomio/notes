@@ -2,6 +2,9 @@
 
 vs 2010版本问题，咱们不都是用的2015吗
 
+## 报销流程
+ADD ADTS 车票 出差申请 时间
+
 ## 每日周报
 每天工作内容。
 每周汇报
@@ -95,18 +98,24 @@ date        |                           Worklog                          |
 7.14 7.17   |   解决ACSpec的顺序问题      所有table的清除功能              |
 7.18        |   解决若干bug                                             |
 7.19        |   操作手册  删除默认stil  编译前清除 *.gz  新增pattern后 更新PatternExec的include |
+7.20-7.21   |   美化UI，是的父子界面风格统一                            |
+7.24        |   优化UI     编写操作手册                                 |
+7.25        |   
+
 
 ## bugs
 1. - [x] channelMap更新时刻
 2. - [x] 填表省略 统一一下
-3. - [ ] 每个按钮是否绑定了同一个对象
+3. - [x] 每个按钮是否绑定了同一个对象
 4. - [x] DCSeq写入顺序不对  ???
 5. - [x] 点击dialog后显示的是父级界面
 6. - [x] pattern save 空表终止
 7. - [ ] back delete ctrl+s 保存等按键响应
-8. - [ ] 写完vector  要修改 patternExec 中的Include
+8. - [x] 写完vector  要修改 patternExec 中的Include
 9. - [x] 新工程 要删除默认的stil文件 signal.stil exec.stil timing.stil vector/vector.stil
 10. - [x] 编译前清理out文件夹下文件
+11. - [x] 插入行 单元格为普通item   行高  widget的map  
+12. - [x] 快捷键 复制粘贴 patternExec 清理
 
 ## EduTest文档
 模块编号：
@@ -173,9 +182,11 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 23. - [x] shmoo margin 的可执行文件
 24. - [x] 功能树，到excel标注时间。
 25. - [ ] 向量转换
-26. - [ ] ACSpec, Pattern import from json
-27. - [ ] Clear 清除表格数据功能
-28. - [ ] ACSpec 变量先后顺序问题
+26. - [x] ACSpec, Pattern import from json
+27. - [x] Clear 清除表格数据功能
+28. - [x] ACSpec 变量先后顺序问题
+
+
 
 ### shmoo margin 功能模块
 2.4.0_p2 version
