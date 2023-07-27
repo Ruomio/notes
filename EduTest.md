@@ -100,7 +100,7 @@ date        |                           Worklog                          |
 7.19        |   操作手册  删除默认stil  编译前清除 *.gz  新增pattern后 更新PatternExec的include |
 7.20-7.21   |   美化UI，是的父子界面风格统一                            |
 7.24        |   优化UI     编写操作手册                                 |
-7.25        |   
+7.25-7.30   |   学习MFC并将Shmoo和Margin编译成可执行文件                |
 
 
 ## bugs
@@ -185,6 +185,8 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 26. - [x] ACSpec, Pattern import from json
 27. - [x] Clear 清除表格数据功能
 28. - [x] ACSpec 变量先后顺序问题
+29. - [ ] EduTest 函数文档
+30. - [ ] Shmoo Margin 生成EXE
 
 
 
