@@ -179,7 +179,17 @@ ps -ef 查看进程
 Xft.dpi: 192
 ```
 
+应用程序缩放：
 
+> --force-device-scale-factor=2 
+
+
+
+## 向日葵启动
+
+>sudo systemctl start runsunloginclient.service 
+>
+>sudo systemctl enable runsunloginclient.service
 
 ## 调整透明度
 
@@ -395,6 +405,20 @@ rm -rf 【软链接地址】
 
 ln -snf 【新目标目录】 【软链接地址】
 
+## ROFI Script
+
+### 格式
+
+> rofi -show [mine] -modi "mine:~/scripts/rofi.sh"
+
+返回选中的文本
+
+> ls | rofi -dmenu 
+>
+> history | rofi -dmenu.    h=$(history | rofi -dmenu)
+
+
+
 # pacman
 
 ## 强制安装
@@ -447,5 +471,16 @@ export https=http://127.0.0.1:7890
 # 或, 设置 socket 代理(clash)
 export http_proxy=socks5://127.0.0.1:7891
 export https_proxy=socks5://127.0.0.1:7891
+```
+
+# linopencm3 编译
+
+## 步骤
+
+```shell
+1. 编写源码
+2. arm-none-eabi-gcc 编译出 [out.elf]
+3. arm-none-eabi-objcopy -O binary [out.elf] [out.bin]
+5. st-flash --reset write [out.bin] 0x8000000
 ```
 

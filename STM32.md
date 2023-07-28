@@ -8,3 +8,11 @@
 
 > st-flash write xxx.bin 0x8000000
 
+
+
+# Arm-none-eabi-gcc
+
+## 二进制复制
+
+`arm-none-eabi-objcopy -O binary xxx.elf xxx.bin`
+
