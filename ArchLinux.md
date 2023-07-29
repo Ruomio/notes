@@ -473,14 +473,11 @@ export http_proxy=socks5://127.0.0.1:7891
 export https_proxy=socks5://127.0.0.1:7891
 ```
 
-# linopencm3 编译
+# Shell
 
-## 步骤
+## 注意
 
-```shell
-1. 编写源码
-2. arm-none-eabi-gcc 编译出 [out.elf]
-3. arm-none-eabi-objcopy -O binary [out.elf] [out.bin]
-5. st-flash --reset write [out.bin] 0x8000000
-```
+> 带多个参数的命令 要加 command 修饰，例如
+>
+> `command gcc -g main.c -o main`
 
