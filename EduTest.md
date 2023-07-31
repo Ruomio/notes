@@ -101,6 +101,7 @@ date        |                           Worklog                          |
 7.20-7.21   |   美化UI，是的父子界面风格统一                            |
 7.24        |   优化UI     编写操作手册                                 |
 7.25-7.30   |   学习MFC并将Shmoo和Margin编译成可执行文件                |
+7.31        |   
 
 
 ## bugs
@@ -110,13 +111,16 @@ date        |                           Worklog                          |
 4. - [x] DCSeq写入顺序不对  ???
 5. - [x] 点击dialog后显示的是父级界面
 6. - [x] pattern save 空表终止
-7. - [ ] back delete ctrl+s 保存等按键响应
+7. - [x] back delete ctrl+s 保存等按键响应
 8. - [x] 写完vector  要修改 patternExec 中的Include
 9. - [x] 新工程 要删除默认的stil文件 signal.stil exec.stil timing.stil vector/vector.stil
 10. - [x] 编译前清理out文件夹下文件
 11. - [x] 插入行 单元格为普通item   行高  widget的map  
 12. - [x] 快捷键 复制粘贴 patternExec 清理
-13. - [ ] 所有工具
+13. - [ ] 所有工具  
+    a. DataLog(x) <br/>
+    b. SHmoo & Margin & VectorDebugger & InnerChecker & RCSDebug & RTDFViewer & TDRTest    <br/>
+    c. start & stop & override & pause & repeat & formattanslate    <br/>
 14. - [ ] 表格初始 3-5 行  1行
 15. - [ ] 防呆设置
 
@@ -184,7 +188,7 @@ mainTestWidget -> MaintestDockWidget -> EduTest -> mSettingParamsWidget -> updat
 22. - [x] 显示之前填入的数据
 23. - [x] shmoo margin 的可执行文件
 24. - [x] 功能树，到excel标注时间。
-25. - [ ] 向量转换
+25. - [x] 向量转换 cancel
 26. - [x] ACSpec, Pattern import from json
 27. - [x] Clear 清除表格数据功能
 28. - [x] ACSpec 变量先后顺序问题
