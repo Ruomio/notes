@@ -101,7 +101,7 @@ date        |                           Worklog                          |
 7.20-7.21   |   美化UI，是的父子界面风格统一                            |
 7.24        |   优化UI     编写操作手册                                 |
 7.25-7.30   |   学习MFC并将Shmoo和Margin编译成可执行文件                |
-7.31        |   
+7.31-8.1    |   表格初始设置为 1行， 导入逻辑                           |
 
 
 ## bugs
@@ -121,8 +121,8 @@ date        |                           Worklog                          |
     a. DataLog(x) <br/>
     b. SHmoo & Margin & VectorDebugger & InnerChecker & RCSDebug & RTDFViewer & TDRTest    <br/>
     c. start & stop & override & pause & repeat & formattanslate    <br/>
-14. - [ ] 表格初始 3-5 行  1行
-15. - [ ] 防呆设置
+14. - [x] 表格初始 3-5 行  1行
+15. - [x] 防呆设置 (限制为数字字母下划线)
 
 ## EduTest文档
 模块编号：
