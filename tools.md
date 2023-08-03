@@ -88,7 +88,7 @@ doc/.txt# 会忽略 doc/notes.txt 但不包括 doc/server/arch.txt
 
 ```shell
 $ git update-index --skip-worktree file1
-$ git update-index --skip-worktree file1
+$ git update-index --assume-unchanged file1
 ```
 命令 git update-index 的 --skip-worktree 选项使 Git 假装文件的版本是最新的，而是从索引版本中读取。这对于配置文件特别有用。
 

@@ -102,6 +102,7 @@ date        |                           Worklog                          |
 7.24        |   优化UI     编写操作手册                                 |
 7.25-7.30   |   学习MFC并将Shmoo和Margin编译成可执行文件                |
 7.31-8.1    |   表格初始设置为 1行， 导入逻辑                           |
+8.2-8.3       |   DataLog Option function                             |
 
 
 ## bugs
@@ -117,12 +118,13 @@ date        |                           Worklog                          |
 10. - [x] 编译前清理out文件夹下文件
 11. - [x] 插入行 单元格为普通item   行高  widget的map  
 12. - [x] 快捷键 复制粘贴 patternExec 清理
-13. - [ ] 所有工具  
+13. - [x] 所有工具  
     a. DataLog(x) <br/>
     b. SHmoo & Margin & VectorDebugger & InnerChecker & RCSDebug & RTDFViewer & TDRTest    <br/>
     c. start & stop & override & pause & repeat & formattanslate    <br/>
 14. - [x] 表格初始 3-5 行  1行
 15. - [x] 防呆设置 (限制为数字字母下划线)
+16. - [x] line:534 PlotScopeData(&v[0], static_cast<int>(v.size()), name, dut, "V");
 
 ## EduTest文档
 模块编号：
