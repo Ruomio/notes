@@ -470,6 +470,22 @@ ln -snf 【新目标目录】 【软链接地址】
 
 pacmam -U package.pkg.tar.gz 从安装本地package包
 
+
+
+## 多线程编译
+
+```SHELL
+sudo vim /etc/makepkg.conf 
+```
+
+找到 MAKEFLAGS 参数,修改 -j 后面的参数为想要用多少个核编译,保持并退出
+
+```tex
+MAKEFLAGS="-j8"
+```
+
+
+
 ## 代理问题
 
 ```shell
