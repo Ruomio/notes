@@ -149,6 +149,15 @@ brctl show
 
 
 
+## nmcli  创建网桥
+
+注意: 仅有线网卡可以
+
+1. 添加新的网桥： `nmcli connection add type bridge con-name virbr0 ifname virbr0 autoconnect yes`
+2. 创建子网卡： `nmcli con add type bridge-slave ifname ${网卡名} master ${网桥名}`
+3. 打开 br0： `nmcli con up br0`
+4. 
+
 
 
 ## 查看端口
