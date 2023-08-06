@@ -18,6 +18,12 @@
 >
 > shift + alt + space 从悬浮小窗口切换到平铺
 
+### 从xsession启动 
+
+/usr/share/xsession/dwm.desktop
+
+
+
 ## picom
 
 

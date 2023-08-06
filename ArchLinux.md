@@ -200,6 +200,10 @@ Xft.dpi: 192
 >
 >sudo systemctl enable runsunloginclient.service
 
+## chrome 代理
+
+1. `sudo google-chrome --proxy-server="127.0.0.1:8080" --no-sandbox`
+
 ## 调整透明度
 
 > * xprop 点击窗口获取窗口信息 WM_CLASS(STRING) 后的内容
@@ -427,6 +431,30 @@ ln -snf 【新目标目录】 【软链接地址】
 > history | rofi -dmenu.    h=$(history | rofi -dmenu)
 
 
+
+## 屏蔽磁盘
+
+1　启动后的禁用 无需重启
+
+　（sdx是你的磁盘 udev的更新可能会导致磁盘重新出现 在向系统添加/删除磁盘也可能会改变）
+
+> ```javascript
+>  echo 1>/sys/block/sdx/device/delete 
+> ```
+
+2　基本上你创建一个文件`/etc/udev/rules.d/99-hide-disks.rules` ，你在其中放置该行
+
+> ```ini
+>  KERNEL=="sda1", ENV{UDISKS_PRESENTATION_HIDE}="1" 
+> ```
+
+　 其中*sda1*是您要隐藏的分区的名称。 在某些系统中它也可以
+
+> ```ini
+>  KERNEL=="sda1", ENV{UDISKS_IGNORE}="1" 
+> ```
+
+   然后你重新启动。
 
 # pacman
 
