@@ -102,7 +102,9 @@ date        |                           Worklog                          |
 7.24        |   优化UI     编写操作手册                                 |
 7.25-7.30   |   学习MFC并将Shmoo和Margin编译成可执行文件                |
 7.31-8.1    |   表格初始设置为 1行， 导入逻辑                           |
-8.2-8.3       |   DataLog Option function                             |
+8.2-8.3     |   DataLog Option function                             |
+8.4         |   尝试使用Cmake管理项目                                   |
+8.7         |   尝试使用Cmake管理项目                                   |
 
 
 ## bugs
@@ -125,6 +127,9 @@ date        |                           Worklog                          |
 14. - [x] 表格初始 3-5 行  1行
 15. - [x] 防呆设置 (限制为数字字母下划线)
 16. - [x] line:534 PlotScopeData(&v[0], static_cast<int>(v.size()), name, dut, "V");
+17. - [ ] 安装包
+18. - [ ] 按照规范 文档 
+19. 
 
 ## EduTest文档
 模块编号：
