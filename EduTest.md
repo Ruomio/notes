@@ -104,7 +104,7 @@ date        |                           Worklog                          |
 7.31-8.1    |   表格初始设置为 1行， 导入逻辑                           |
 8.2-8.3     |   DataLog Option function                             |
 8.4         |   尝试使用Cmake管理项目                                   |
-8.7         |   尝试使用Cmake管理项目                                   |
+8.7-8.11    |   尝试使用Cmake管理项目      制作EduTest安装包            |
 
 
 ## bugs
