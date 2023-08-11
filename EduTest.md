@@ -127,9 +127,10 @@ date        |                           Worklog                          |
 14. - [x] 表格初始 3-5 行  1行
 15. - [x] 防呆设置 (限制为数字字母下划线)
 16. - [x] line:534 PlotScopeData(&v[0], static_cast<int>(v.size()), name, dut, "V");
-17. - [ ] 安装包
+17. - [x] 安装包
 18. - [ ] 按照规范 文档 
-19. 
+19. - [ ] vs2015 AITest EduTest 放在同一个安装包
+20. - [x] license.dat 是根据环境变量读取得  AITest:  C:/AITest
 
 ## EduTest文档
 模块编号：
