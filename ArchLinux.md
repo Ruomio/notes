@@ -460,7 +460,7 @@ ln -snf 【新目标目录】 【软链接地址】
 
 ## 强制安装
 
->pacman -S –overwrite 要覆盖的文件模式**
+>pacman -S --overwrite '*' 要覆盖的文件模式**
 
 ## 在 Arch Linux 上安装 Debtap
 
