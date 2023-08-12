@@ -22,7 +22,13 @@
 
 /usr/share/xsession/dwm.desktop
 
+## patch
 
+> patch < *.diff	# 打补丁
+>
+> patch -R < *.diff # 取消补丁
+>
+> 
 
 ## picom
 
