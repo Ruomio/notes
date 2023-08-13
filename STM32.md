@@ -17,10 +17,23 @@ BOOT IO
 复位IO
 以上IO组成的系统称最小系统
 
-### GPIO: 
+## RCC
+1. RCC_CR
+2. RCC_CFGR
+3. RCC_CIR
+4. RCC_APB2RSTR
+5. RCC_APB1RSTR
+6. RCC_AHBENR
+7. RCC_AHBENR
+8. RCC_AHB2ENR
+9. RCC_AHB1ENR
+10. RCC_BDCR
+11. RCC_CSR
+
+## GPIO: 
 专用总线:I2C, SPI, SDIO, FSMC, DCMI
 普通总线: 蜂鸣器, LED, 按键
-#### 寄存器描述
+### 寄存器描述
 1. CRL 配置低寄存器
 2. CRH 配置高寄存器
 3. ODR 输入数据寄存器

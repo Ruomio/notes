@@ -1,6 +1,6 @@
 # Suckless
 
-# ST
+## ST
 
 ### 同一个终端的不同区域切换
 
@@ -10,7 +10,7 @@
 
 ## DWM
 
-## 改变布局方式
+### 改变布局方式
 
 > mod + i 竖向布局
 >
@@ -22,13 +22,19 @@
 
 /usr/share/xsession/dwm.desktop
 
-## patch
+### patch
 
 > patch < *.diff	# 打补丁
 >
 > patch -R < *.diff # 取消补丁
 >
 > 
+
+### 字体
+
+> fc-list
+
+
 
 ## picom
 
