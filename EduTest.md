@@ -105,7 +105,7 @@ date        |                           Worklog                          |
 8.2-8.3     |   DataLog Option function                             |
 8.4         |   尝试使用Cmake管理项目                                   |
 8.7-8.11    |   尝试使用Cmake管理项目      制作EduTest安装包            |
-
+8.14        |   将AITest后台集成，达到不需要额外安装AITest的效果        |
 
 ## bugs
 1. - [x] channelMap更新时刻
@@ -131,6 +131,7 @@ date        |                           Worklog                          |
 18. - [ ] 按照规范 文档 
 19. - [ ] vs2015 AITest EduTest 放在同一个安装包
 20. - [x] license.dat 是根据环境变量读取得  AITest:  C:/AITest
+21. - [ ] 需要修改的地方： a.所有出现AITest环境变量的地方 b. 所有引用.dll, .lib的地方
 
 ## EduTest文档
 模块编号：
