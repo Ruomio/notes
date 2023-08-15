@@ -106,6 +106,7 @@ date        |                           Worklog                          |
 8.4         |   尝试使用Cmake管理项目                                   |
 8.7-8.11    |   尝试使用Cmake管理项目      制作EduTest安装包            |
 8.14        |   将AITest后台集成，达到不需要额外安装AITest的效果        |
+8.15        |   Cmake 编译项目成功，只有链接错误                        |
 
 ## bugs
 1. - [x] channelMap更新时刻
