@@ -23,6 +23,20 @@ sudo prime-select query  # 查看当前使用的显卡
 
 
 
+Y7000用的是GTX 1650移动版显卡，所以执行以下命令
+
+```shell
+sudo pacman -S mesa nvidia-dkms nvidia-settings nvidia-utils nvidia-prime
+```
+
+禁用模块
+
+```shell
+sudo nvim /etc/modprobe.d/nouveau_blicklist.conf
+```
+
+
+
 * glxinfo命令可以查看当前正在使用的显卡。
 
 ```shell
@@ -191,6 +205,10 @@ Xft.dpi: 192
 应用程序缩放：
 
 > --force-device-scale-factor=2 
+
+## 双屏设置
+
+> xrandr --output eDP-1-1 --primary --mode 3840x2160 --output DP-0 --mode 1920x1080 --left-of eDP-1-1
 
 
 
