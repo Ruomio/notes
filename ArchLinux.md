@@ -23,20 +23,6 @@ sudo prime-select query  # 查看当前使用的显卡
 
 
 
-Y7000用的是GTX 1650移动版显卡，所以执行以下命令
-
-```shell
-sudo pacman -S mesa nvidia-dkms nvidia-settings nvidia-utils nvidia-prime
-```
-
-禁用模块
-
-```shell
-sudo nvim /etc/modprobe.d/nouveau_blicklist.conf
-```
-
-
-
 * glxinfo命令可以查看当前正在使用的显卡。
 
 ```shell
@@ -163,6 +149,20 @@ brctl show
 
 
 
+## 创建证书连接
+
+> ```shell
+> nmcli connection add \
+>  type wifi con-name "IMUNET-NG" ifname wlp7s0 ssid "IMUNET-NG" -- \
+>  wifi-sec.key-mgmt wpa-eap 802-1x.eap ttls \
+>  802-1x.phase2-auth mschapv2 802-1x.identity "32309140" \
+>  802-1x.password "131539"
+>  
+>  
+> 启动时(第一次)：
+> nmcli --ask connection up IMUNET-NG
+> ```
+
 ## nmcli  创建网桥
 
 注意: 仅有线网卡可以
@@ -205,6 +205,8 @@ Xft.dpi: 192
 应用程序缩放：
 
 > --force-device-scale-factor=2 
+
+
 
 ## 双屏设置
 
