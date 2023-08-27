@@ -480,7 +480,9 @@ ln -snf 【新目标目录】 【软链接地址】
 
 ## QQ闪退
 
-> ~ sudo chattr +i ~/.config/QQ/crash_files/
+> 文件问题： sudo chattr +i ~/.config/QQ/crash_files/
+>
+> 代理问题： 不要走代理
 
 
 
