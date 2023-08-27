@@ -210,7 +210,7 @@ Xft.dpi: 192
 
 ## 双屏设置
 
-> xrandr --output eDP-1-1 --primary --mode 3840x2160 --output DP-0 --mode 1920x1080 --left-of eDP-1-1
+> xrandr --output eDP-1-1 --primary --mode 3840x2160 --scale 1x1 --output DP-0 --mode 1920x1080 --scale 2x2 --left-of eDP-1-1 
 
 
 
@@ -475,6 +475,14 @@ ln -snf 【新目标目录】 【软链接地址】
 > ```
 
    然后你重新启动。
+
+
+
+## QQ闪退
+
+> ~ sudo chattr +i ~/.config/QQ/crash_files/
+
+
 
 # pacman
 
