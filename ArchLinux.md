@@ -182,6 +182,10 @@ lsof  -i: 端口号
 
 ps -ef 查看进程
 
+w , tty
+
+pkill 命令：杀死终端中所有命令 - pkill -9 -t pts/0
+
 
 
 ## patch补丁
@@ -200,6 +204,7 @@ ps -ef 查看进程
 # ~/.Xresources
 # 默认96
 Xft.dpi: 192
+xrdb -merge /home/papillon/.Xresources
 ```
 
 应用程序缩放：
@@ -223,6 +228,7 @@ Xft.dpi: 192
 ## chrome 代理
 
 1. `sudo google-chrome --proxy-server="127.0.0.1:8080" --no-sandbox`
+1. 使用代理插件
 
 ## 调整透明度
 
@@ -564,3 +570,4 @@ export https_proxy=socks5://127.0.0.1:7891
 >
 > `command gcc -g main.c -o main`
 
+# 
