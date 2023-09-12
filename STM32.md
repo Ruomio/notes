@@ -86,4 +86,4 @@ BOOT IO
 2. 运行`st-util`命令来打开 gdbserver, 并记住端口号 ${port}
 3. arm-none-eabi-gdb xx.elf
 4. target remote *: ${port} 
-5. stepi , l, continue 等命令
+5. stepi , next, finish, list , continue ，- (图形界面)，info break, display, bt (查看堆栈) 等命令
