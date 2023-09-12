@@ -78,3 +78,12 @@ BOOT IO
 
 `arm-none-eabi-objcopy -O binary xxx.elf xxx.bin`
 
+
+
+# GDB stlink调试程序
+
+1. 先编译程序下载到板子上
+2. 运行`st-util`命令来打开 gdbserver, 并记住端口号 ${port}
+3. arm-none-eabi-gdb xx.elf
+4. target remote *: ${port} 
+5. stepi , l, continue 等命令
