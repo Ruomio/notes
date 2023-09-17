@@ -80,10 +80,39 @@ BOOT IO
 
 
 
+# PlatforIO
+
+## openocd权限问题
+
+`sudo chown -R papillon:users /dev/stlinkv2_4  `
+
+
+
+
+
 # GDB stlink调试程序
 
-1. 先编译程序下载到板子上
-2. 运行`st-util`命令来打开 gdbserver, 并记住端口号 ${port}
-3. arm-none-eabi-gdb xx.elf
-4. target remote *: ${port} 
-5. stepi , next, finish, list , continue ，- (图形界面)，info break, display, bt (查看堆栈) 等命令
+1. arm-none-eabi-as -mthumb  -mcpu=cortex-m3 -g xxx.s -o xxx.o        `-mthumb (16位指令集)`
+2. arm-none-eabi-ld xxx.o -T xxx.ld -o xxx.elf
+3. 先编译程序下载到板子上
+4. 运行`st-util`命令来打开 gdbserver, 并记住端口号 ${port}
+5. arm-none-eabi-gdb xx.elf
+6. target remote *: ${port} 
+7. stepi , next, finish, list , continue ，- (图形界面)，info break, display, bt (查看堆栈),  jump <linenum> 跳转到第几行， x (打印地址的值) 等命令
+
+
+
+
+# ARM 汇编
+## 寄存器
+
+> cortex-M 系列使用armv7架构，使用thumb 指令集(T32)
+
+模式: User, FIQ, IRQ, ABT, SVC, UND, MON, HYP
+* 1. R0-R12通用寄存器，放通用数据，32bit
+* 2. 各个模式R0-R12与User模式是共享的（除了 FIQ的R8-R12), PC, CPSR 是共享的
+* 3. USER模式没有SPSR
+> SP 栈指针，存储栈地址
+> LR 链接寄存器，存储子程序返回地址
+> PC 程序计数器
+> APSR/CPSR 应用程序状态寄存器/当前程序状态寄存器
