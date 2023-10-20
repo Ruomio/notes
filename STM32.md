@@ -102,6 +102,14 @@ BOOT IO
 
 
 
+# 串口工具
+
+minicom
+
+`sudo minicom -s` 配置参数
+
+`sudo minicom` 连接串口
+
 
 # ARM 汇编
 ## 寄存器
