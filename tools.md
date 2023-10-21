@@ -120,6 +120,16 @@ git log --author=<作者名> --pretty=tformat: --numstat | awk '{ add += $1; sub
 
 
 
+# tar 命令
+
+tar x *.rar 解压文件到同名目录
+
+tar e *.tar 解压文件到同级目录
+
+
+
+
+
 # MarkDowm
 
 > 以下几个实例效果图如下：
