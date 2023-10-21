@@ -108,7 +108,9 @@ minicom
 
 `sudo minicom -s` 配置参数
 
-`sudo minicom` 连接串口
+`sudo minicom -D /dev/bus/usb/001/012` 连接串口
+
+`ctrl_A Z`菜单
 
 
 # ARM 汇编
