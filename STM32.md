@@ -58,6 +58,36 @@ BOOT IO
 
 ```
 
+## IWDG 独立看门狗
+
+递减计数器到0后，会自动复位，所以启用iwdg后要及时重装载计数器的值。
+
+是异常处理的最后手段，不可依赖，应在设计时尽量避免异常的发生。
+
+### 工作原理
+
+启用iwdg后，LSI(内部低速时钟)会自动开启
+
+键寄存器iwdg_kr
+
+```markdown
+写入0xAAAA,喂狗
+写入0x5555,解除pr和rlr寄存器的写保护
+写入0xCCCC,启用iwdg工作
+```
+
+预分频寄存器iwdg_pr,设置时钟的预分频系数。psc=4*2^prer.
+
+重装载寄存器iwdg_rlr,存放重装载值，低12位有效。
+
+状态寄存器iwdg_sr,用于判断预分频值和重装载值是否已经被更改。
+
+### 溢出时间计算
+
+$$
+T (out)=\frac{psc*rlr}{f_{iwdg}}=\frac{4*2^{prer}*rlr}{f_{iwdg}}
+$$
+
 
 
 # st-link 烧录程序
@@ -104,7 +134,7 @@ BOOT IO
 
 # 串口工具
 
-minicom
+## minicom
 
 `sudo minicom -s` 配置参数
 
