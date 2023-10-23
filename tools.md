@@ -132,6 +132,8 @@ tar e *.tar 解压文件到同级目录
 
 # MarkDowm
 
+## 流程图
+
 > 以下几个实例效果图如下：
 >
 > **1、横向流程图源码格式：**
@@ -266,6 +268,48 @@ tar e *.tar 解压文件到同级目录
 >         测试报告                               : 48h
 > ```
 > ````
+
+## 公式块
+
+`$$`进入公式块编辑, 行间公式
+
+`$***$`在中间写公式，行内公式
+
+> `a\div{b}`:  $a\div{b}$
+>
+>  `a\pm{b}`: $a\pm{b}$
+>
+> `a\frac{a}{b}`: $\frac{a}{b}$
+>
+> `\sqrt{a}`: $\sqrt{a}$
+>
+> `\cdots`: $\cdots$
+>
+> `\sin{\theta}`: $\sin{\theta}$
+>
+> `\vec{`F`}`: $\vec{F}$
+>
+> `\sum_{i=1}^{n}{a_i}`: $\sum_{i=1}^{n}{a_i}$
+>
+> `\prod_{i=1}^{n}{a_i}`: $\prod_{i=1}^{n}{a_i}$
+>
+> `\lim_{a\rightarrow+\infty}{a+b}`: $\lim_{a\rightarrow+\infty}{a+b}$
+>
+> `\leg`: $\leq$
+>
+> `\geq`: $\geq$
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
