@@ -85,12 +85,69 @@ BOOT IO
 ### 溢出时间计算
 
 $$
-T (out)=\frac{psc*rlr}{f_{iwdg}}=\frac{4*2^{prer}*rlr}{f_{iwdg}}
+T (out)=\frac{psc*rlr}{f_{iwdg}}=\frac{4*2^{prer}*rlr}{f_{iwdg}}， f_{iwdg}:iwdg的时钟频率
 $$
 
+## WWDG 窗口看门狗
 
+主要用于检测软件异常
+
+递减计数器，能产生系统复位信号和提前唤醒中断.
+
+计数器从0x40减到0x3F时产生复位（即T6位跳变到0）
+
+计数器值大于W[6:0]时喂狗会复位
+
+提前唤醒中断(EWI):计数器等于0x40时可产生
+
+在窗口期内重装载计数器的值，防止复位。
+
+### 工作原理
+
+T[6:0]从0x7F(127)开始递减计数，减到W[6:0] (窗口上限值，大于这个值时喂狗会产生复位，在上限值和下限值之间喂狗不会产生复位)，减到0x40(64)时可产生中断，减到0x3F(63)(窗口下限值)，产生复位。
+
+### 超时时间计算
+
+WWDG_CR控制寄存器，[6:0]有效，计数器（MSB到LSB，T6为0会产生复位）,[7]是WDGA 激活位，`0:禁用WWDG；1:使能看门狗` 
+
+WWDG_CFR:配置寄存器。T9 ：提前唤醒终端，计数器递减到0x40时产生中断，此中断中有复位后才能由硬件清零（还要使能NVIC）。T8:7 WDGTB:定时器时基。 2^WDGTB^计算分频器
+
+WWDG_SR 状态寄存器。T0 EWIF： 提前唤醒中断标志，当计数器递减到0x40时由硬件置1.且只能由软件方式写0，如果不使能EWIF，此位也为1. 使能EWIF，信号会传到NVIC。
+
+### WWDG超时渐渐计算
+
+$$
+T_{out}=\frac{4096*2^{WDGTB}*(T[5:0]+1)}{F_{wwdg}}
+$$
+
+### WWDG配置步骤
+
+1. WWDG工作参数初始化 HAL_WWDG_Init()
+2. WWDG MSP初始化 HAL_WWDG_MspInit() 配置NVIC,Clock等
+3. 设置优先级，使能中断 HAL_NVIC_SetPriority() HAL_NVIC_Enable
+4. 编写中断服务函数 WWDG_IRQHandler()-->HAL_WWDG_IRQHHandler
+5. 重定义提前唤醒回调函数 HAL_WWDG_EarlyWakeupCallback()
+6. 在窗口器内喂狗 HAN_WWDG_Refresh()
+
+
+
+# 构建HAL库工程（不使用cubemx）
+
+## 必须文件
+
+1. stm32f1xx_hal_conf.h	通过宏定义来include相应的外设头文件
+2. stm32f1xx_it.h/c 中断相关的代码，weak声明的函数需要重定义
+3. system_stm32f1xx.c 内核级别的依赖程序，系统内核时钟，总线时钟等
+4. stm32f1xx_hal_msp.c 板级支持包，MCU相关的硬件初始化操作
+
+## 初始化流程
+
+1. HAL_Init(): 外设 flash 中断优先级 systemtick等
+2. SystemClock_Config(): 配置倍频和总线频率
+3. 外设初始化
 
 # st-link 烧录程序
+
 ## 常用命令
 > st-flash reset
 
