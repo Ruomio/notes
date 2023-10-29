@@ -222,7 +222,49 @@ graph LR
 | 递减       | CNT==0                  |
 | 中心对齐   | CNT == ARR-1,  CNT == 1 |
 
+#### 计时器终端相关寄存器
 
+> TIMx_CR1
+>
+> bit7 ARPE: 自动重装载预装载使能，决定ARR寄存器是否有缓冲
+>
+> bit0 CEN: 计数器使能
+
+> TIMx_DIER
+>
+> bit8 UDE: 更新DMA请求使能
+>
+> bit0 UIE: 更新中断使能
+
+> TIMx_SR
+>
+> bit0 UIF: 更新中断标志
+
+> TIMx_CNT
+>
+> bit[15:0] 计数器数值
+
+> TIMx_PSC	实际起作用是它的影子寄存器
+>
+> bit[15:0] 预分频数值
+
+> TIMx_ARR    实际起作用是它的影子寄存器
+>
+> bit[15:0] 自动重装载数值
+
+#### 寄存器溢出时间计算方法
+
+$$
+T_{out}=\frac{(ARR+1)*(PSC+1)}{F_t}
+$$
+
+#### 定时器中断实验配置步骤
+
+1. HAL_TIM_Base_Init()
+2. HAL_TIM_Base_MspInit(), NVIC, CLOCK etc.
+3. HAL_TIM_Base_Start_IT()
+4. HAL_NVIC_SetPriority(), HAL_NVIC_EnableIRQ()
+5. TIMx_IRQGandler() -> HAL_TIM_IRQHandler()
 
 ### 通用定时器
 
