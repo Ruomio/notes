@@ -746,6 +746,76 @@ ${pathSeparator} - 操作系统用来分隔文件路径中的组件的字符
 
 ## 调试
 
+### launch.json
+
+```json
+//launch.json
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "debug_c",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "clang"
+        },
+        {
+            "name": "debug_cpp",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "preLaunchTask": "clang++"
+        }
+
+    ]
+}
+```
+
+### tasks.json
+
+```json
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "clang",
+            "type": "shell",
+            "command": "/usr/bin/clang",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ]
+        },
+
+        {
+            "label": "clang++",
+            "type": "shell",
+            "command": "/usr/bin/clang++",
+            "args": [
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ]
+        }
+    ]
+}
+```
+
+
+
 ```cmake
 # 可以在CMakeLists里安排一个输出变量的调试点，以跟踪整个构造过程。
 get_cmake_property(_variableNames VARIABLES)
