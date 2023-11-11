@@ -161,3 +161,8 @@
 
 
 
+# 高云IDE启动过程
+
+> ```shell
+> LD_PRELOAD=/usr/lib/libfreetype.so /opt/Gowin_V1.9/IDE/bin/gw_ide
+> ```

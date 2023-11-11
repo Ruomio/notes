@@ -201,7 +201,7 @@ F1特征表（芯片不一样要查手册 ）:
 #### 框图
 
 ```mermaid
-graph LR
+graph TB
 	A(RCC) --> B[触发控制器 复位,使能,计数]
 	B --> |TRGO UI事件| C[DAC]
     B --> D[预分频器]
@@ -340,6 +340,8 @@ if( __HAL_TIM_GET_ITSTATUS(&tim_HandleX, TIM_IT_UPDATE) == SET)
 
 #### PWM原理
 
+输出比较部分
+
 PWM: 脉冲宽度调制
 
 ARR 决定PWM周期
@@ -350,6 +352,9 @@ PWM周期/频率
 $$
 T_{out}=\frac{(ARR + 1)*(PSC + 1)}{F_t}
 $$
+
+#### 输入捕获部分
+
 
 
 ### 高级定时器
