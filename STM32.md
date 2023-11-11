@@ -297,7 +297,7 @@ G --> |比较中断| I[输出比较]
 | ----------------------------- | ----------------------- |
 | 内部时钟 CK_INT               | set TIMx_SMCR.SMS = 000 |
 | 外部时钟模式1:外部输入引脚TIx | set TIMx_SMCR.SMS = 111 |
-| 外部时钟模式2:外部输入引脚RTR | set TIMx_SMCR.ECE = 1   |
+| 外部时钟模式2:外部输入引脚ETR | set TIMx_SMCR.ECE = 1   |
 | 内部触发输入 ITRx             | 参考手册                |
 
 
@@ -308,7 +308,7 @@ G --> |比较中断| I[输出比较]
 
 > 
 
-1. TIMx_SMCR 从模式控制寄存器
+2. TIMx_SMCR 从模式控制寄存器
 
 > b[15] ETP 外部触发极性
 >
@@ -323,6 +323,34 @@ G --> |比较中断| I[输出比较]
 > b[6:4] TS 触发选择
 >
 > b[2:0] SMS 从模式选择
+
+略（看手册）
+
+#### 嵌套使用
+
+使用一个定时器作为另一个定时器的预分频器
+
+#### 通用定时器中断
+
+HAL_TIM_Base_Start_IT(); 函数要在TIM_GENERAL_Init函数里，而不是MspInit()函数里
+
+中断判断： == SET 或 != RESET
+
+if( __HAL_TIM_GET_ITSTATUS(&tim_HandleX, TIM_IT_UPDATE) == SET)
+
+#### PWM原理
+
+PWM: 脉冲宽度调制
+
+ARR 决定PWM周期
+
+CRRX 决定PWM占空比 
+
+PWM周期/频率
+$$
+T_{out}=\frac{(ARR + 1)*(PSC + 1)}{F_t}
+$$
+
 
 ### 高级定时器
 
