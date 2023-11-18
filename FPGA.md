@@ -166,3 +166,11 @@
 > ```shell
 > LD_PRELOAD=/usr/lib/libfreetype.so /opt/Gowin_V1.9/IDE/bin/gw_ide
 > ```
+
+
+
+# 使用vscode开发环境
+
+> OSS CAD Suite --> Lushay Code(vscode插件)
+>
+> Verilog-HDL
