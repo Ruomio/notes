@@ -128,6 +128,20 @@ tar e *.tar 解压文件到同级目录
 
 
 
+# ZIP 命令
+
+> 压缩文件夹
+>
+> zip -r xxx.zip xxx
+>
+> 查看压缩包文件
+>
+> unzip -l xxx.zip
+>
+> 解压
+>
+> unzip xxx.zip
+
 
 
 # MarkDowm
