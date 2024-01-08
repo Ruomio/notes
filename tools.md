@@ -132,7 +132,7 @@ tar e *.tar 解压文件到同级目录
 
 > 压缩文件夹
 >
-> zip -r xxx.zip xxx
+> zip -r -q xxx.zip xxx
 >
 > 查看压缩包文件
 >

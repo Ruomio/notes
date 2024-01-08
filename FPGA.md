@@ -171,6 +171,14 @@
 
 # 使用vscode开发环境
 
-> OSS CAD Suite --> Lushay Code(vscode插件)
+> OSS CAD Suite --> Lushay Code(vscode插件) -> 右下角 fpga toolchain
 >
 > Verilog-HDL
+
+
+
+# iverilog 仿真
+
+1. iverilog -o wave led_demo_tb.v led_demo.v
+2. vvp -n wave -lxt2
+3. gtkwave wave.vcdv
