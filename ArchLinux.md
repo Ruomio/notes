@@ -570,4 +570,58 @@ export https_proxy=socks5://127.0.0.1:7891
 >
 > `command gcc -g main.c -o main`
 
-# 
+
+
+
+# 内核编译
+## qemu安装
+1. i386:  qemu-system-i386
+2. x86_64: qemu-system-x86_64
+3. arm : qemu-system-arm
+4. arm64: qemu-system-aarch64
+## 交叉编译链安装
+1. arm-linux-gnueabihf-
+2. aarch64-linux-gnu-
+## 编译linux内核
+> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+> make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- -j 8
+
+## 制作跟文件系统 busybox
+1. 下载源码，并设置对应目标的架构，编译。
+2. qemu-img create xxx.img 4g 创建4g磁盘，使用mkfs.ext4 xxx.img 格式化
+```shell
+# 创建 1g (这个根据实际需要进行配置) 的 raw 格式的空镜像磁盘 
+qemu-img create rootfs.img 1g 
+# 将创建的磁盘格式化成 ext4 类型的文件系统 
+mkfs.ext4 rootfs.img 
+# 创建一个文件用来挂载该镜像（用来将编译好的内容装入磁盘，载体） 
+mkdir rootfs 
+# 将 rootfs.img 挂载到 rootfs 文件夹 
+sudo mount -o loop rootfs.img rootfs 
+# 将在 busybox 中编译的内容移动到刚新建的文件夹 rootfs 中(等价于拷贝到了 rootfs.img 磁盘中) 
+cd rootfs 
+sudo cp -r ../busybox/_install/* . 
+# 补充一些必要的文件夹 
+sudo mkdir proc sys dev etc etc/init.d
+
+cd etc/init.d/ sudo touch rcS sudo vi rcS
+
+# 文件内容如下
+#!/bin/sh
+mount -t proc none /proc	# 挂载文件系统到 /proc 目录, 它提供了一个接口来访问内核和进程信息
+mount -t sysfs none /sys	# 挂载sysfs文件系统到 /sys 目录, 提供了一种方式来访问和调整内核的运行时信息
+/sbin/mdev -s				# 使用mdev（是BusyBox的一部分）来初始化/dev目录，它负责创建设备节点
+							# -s 告诉 mdev 启动是扫描 /sys 目录并创建设备节点 
+							# /sys中包含了当前系统中硬件设备的详细信息
+
+
+sudo chmod +x rcS
+
+cd ../..
+sudo umount rootfs
+```
+
+## qemu启动系统
+`qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256M -nographic -kernel ../linux-6.7/arch/arm64/boot/Image -drive file=rootfs.img,format=raw,id=hd0,if=none -device virtio-blk-device,drive=hd0 -append "root=/dev/vda rw console=ttyAMA0"
+`

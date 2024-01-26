@@ -173,7 +173,7 @@
 
 > OSS CAD Suite --> Lushay Code(vscode插件) -> 右下角 fpga toolchain
 >
-> Verilog-HDL
+> Verilog-HDL 语法高亮
 
 
 
