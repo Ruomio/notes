@@ -625,3 +625,4 @@ sudo umount rootfs
 ## qemu启动系统
 `qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256M -nographic -kernel ../linux-6.7/arch/arm64/boot/Image -drive file=rootfs.img,format=raw,id=hd0,if=none -device virtio-blk-device,drive=hd0 -append "root=/dev/vda rw console=ttyAMA0"
 `
+## 虚拟机和宿主机通讯
