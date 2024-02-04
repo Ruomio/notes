@@ -29,126 +29,49 @@
 
 ### yosys: 综合工具。
 ```markdown
->  1. 启动 Yosys：
->   - 在命令行中输入 `yosys` 命令来启动 Yosys 工具。
->
->  2. 导入设计文件：
-> 
->    - 在 Yosys 提示符下，使用
->
->       
->
->      ```
->      read_verilog
->      ```
->
->       
->
->      命令导入设计文件：
->
->      复制
->
->      ```
->      yosys> read_verilog design.v
->      ```
->
-> 3. 综合设计：
->
->    - 使用
->
->       
->
->      ```
->      synth
->      ```
->
->       
->
->      命令对设计进行综合：
->
->      复制
->
->      ```
->      yosys> synth <synthesis_command>
->      ```
->
->      ```
->      <synthesis_command>
->      ```
->
->       
->
->      表示您选择的综合命令。Yosys 支持不同的综合命令，如
->
->       
->
->      ```
->      synth_ice40
->      ```
->
->      （针对 Lattice iCE40 FPGA）或
->
->       
->
->      ```
->      synth_xilinx
->      ```
->
->      （针对 Xilinx FPGA）。您可以根据目标 FPGA 平台选择适当的综合命令。
->
-> 4. 查看综合结果：
->
->    - 使用
->
->       
->
->      ```
->      show
->      ```
->
->       
->
->      命令查看综合后的设计：
->
->      复制
->
->      ```
->      yosys> show
->      ```
->
->      这将显示综合生成的逻辑网表。
->
-> 5. 导出网表：
->
->    - 使用
->
->       
->
->      ```
->      write_verilog
->      ```
->
->       
->
->      命令将综合后的逻辑网表导出为 Verilog 文件：
->
->      复制
->
->      ```
->      yosys> write_verilog synthesized.v
->      ```
->
->      这将生成一个名为
->
->       
->
->      ```
->      synthesized.v
->      ```
->
->       
->
->      的文件，其中包含综合后的逻辑网表。
+  1. 启动 Yosys：
+  - 在命令行中输入 `yosys` 命令来启动 Yosys 工具。
+
+  2. 导入设计文件：
+ 
+    - 在 Yosys 提示符下，使用
+      read_verilog
+      命令导入设计文件：
+      复制
+      yosys> read_verilog design.v
+
+ 3. 综合设计：
+
+    - 使用
+      synth
+      命令对设计进行综合：
+
+      复制
+
+      yosys> synth <synthesis_command>
+      <synthesis_command>
+      表示您选择的综合命令。Yosys 支持不同的综合命令，如
+      synth_ice40
+
+      （针对 Lattice iCE40 FPGA）或
+      synth_xilinx
+      （针对 Xilinx FPGA）。您可以根据目标 FPGA 平台选择适当的综合命令。
+ 
+ 4. 查看综合结果：
+    - 使用
+      show
+      命令查看综合后的设计：
+      复制
+      yosys> show
+      这将显示综合生成的逻辑网表。
+
+ 5. 导出网表：
+    - 使用
+      write_verilog
+      命令将综合后的逻辑网表导出为 Verilog 文件：
+      复制
+      yosys> write_verilog synthesized.v
+      这将生成一个名为synthesized.v的文件，其中包含综合后的逻辑网表。
 ```
 
 ### nextpnr-gowin: 实现工具
@@ -156,8 +79,6 @@
 
 
 ### openFPGALoader: 烧录工具。
-
-
 
 
 

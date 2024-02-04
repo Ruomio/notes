@@ -337,6 +337,30 @@ tar e *.tar 解压文件到同级目录
  2、$^     所有依赖文件的集合
  3、$@     目标文件的集合
 
+## demo
+```Makefile
+CC = clang
+
+SRC = $(wildcard *.c)
+
+DEP = $(wildcard *.h)
+
+OBJS = $(patsubset %.c,%.o,$(SRC))
+
+ALL : syn
+
+syn : synA.o synB.o
+
+	$(CC) $^ -o $@
+
+%.o : %.c $(DEP)
+
+	$(CC) -c $< -o $@
+
+.PHONY : clean
+clean :
+	rm *.o syn
+```
 ## clean
 
 > **make** clean 清除之前编译的可执行文件及配置文件。

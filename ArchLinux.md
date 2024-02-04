@@ -504,7 +504,7 @@ ln -snf 【新目标目录】 【软链接地址】
 >
 >```
 >yay -S debtap
->sudo deqbtap -u
+>sudo debtap -u
 >```
 >
 >使用 cd 命令进入 DEB 文件的目录并使用 Debtap 开始转换包。

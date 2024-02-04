@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "3a563bd415c221e0",
+        "id": "c36e2a6b8085bada",
         "type": "tabs",
         "children": [
           {
-            "id": "37c28505ded897da",
+            "id": "1f572feb0b33bd65",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "tools.md",
-                "mode": "source",
+                "file": "FPGA.md",
+                "mode": "preview",
                 "source": false
               }
             }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "tools.md",
+                "file": "FPGA.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "tools.md",
+                "file": "FPGA.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "tools.md"
+                "file": "FPGA.md"
               }
             }
           }
@@ -146,13 +146,16 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "37c28505ded897da",
+  "active": "1f572feb0b33bd65",
   "lastOpenFiles": [
+    "FPGA.md",
+    "tools.md",
+    "TBSTest.md",
+    "Suckless.md",
     "ArchLinux.md",
     "未命名.canvas",
-    "tools.md",
+    "2024-02-04.md",
     "computer_network.md",
-    "FPGA.md",
     "2024-01-24.md",
     "EduTest.md",
     "Untitled.canvas"
