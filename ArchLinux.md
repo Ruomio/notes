@@ -196,7 +196,17 @@ pkill 命令：杀死终端中所有命令 - pkill -9 -t pts/0
 * `-f`：该参数遇到这种情况则继续打补丁，当然一般情况下会报错，毕竟对比不一致了
 * `-N`：忽略该文件
 
+基本命令语法：  
+　　patch [-R] {-p(n)} [--dry-run] < patch_file_name  
+　　p：为path的缩写。  
+　　n：指将patch文件中的path第n条’/’及其左边部分取消。  
+　　-R：卸载patch包。  
+　　--dry-run：尝试patch软件，并不真正修改软件。
 
+　　例如：
+
+　　$ patch -p1 < /home/sense/patch-2.6.19.1      安装补丁  
+　　$ patch -p1 -R < /home/sense/patch-2.6.19.1 卸载补丁
 
 ## DPI设置
 

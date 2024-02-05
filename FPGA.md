@@ -24,6 +24,13 @@
 ```
 
 
+# veirlog语言
+input/output 参数默认是wire类型。
+wire : 组合逻辑，不涉及时序，当电路变化时，跟着变化
+reg : 用于时序逻辑，当电路变化时，要等到下一个时钟才变化。
+所以 assign 赋值要比在always中赋值快一个周期。
+
+
 
 ## 工具
 
@@ -103,6 +110,7 @@
 1. iverilog -o wave led_demo_tb.v led_demo.v
 2. vvp -n wave -lxt2
 3. gtkwave wave.vcdv
+
 
 
 # IP核
