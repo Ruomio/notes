@@ -370,6 +370,29 @@ $$
 
 
 ### 高级定时器
+#### 重复计数器
+比通用定时器多个重复计数寄存器(TIMx_RCR),有效位REP[7:0]，控制，每次计数产生溢出时会令重复计数器-1，减到0时下一次溢出才产生更新中断。
+即设置RCR为N，更新事件将在N+1次溢出产生。
+#### 输出比较
+DTG寄存器，控制死区时间。
+#### 断路功能
+刹车输入引脚
+#### 刹车和死区寄存器
+MOE[15] 主输出使能。0: 进制OC和OCN输出
+#### 注意
+1. 配置边沿对其模式输出PWM
+2. 指定输出N个PWM则把RCR写入N-1
+3. 在更新中断内关闭计数器
+4. 注意要将MOE设置为1
+#### 配置步骤
+1. 配置定时器基础工作参数，`HAL_TIM_PWM_Init()`
+2. 定时器PWM输出MSP初始化，`HAL_TIM_PWM_MspInit()` 配置NVIC,CLOCK,GPIO
+3. 配置PWM模式/比较值等，`HAL_TIM_PWM_ConfigChannel()`
+4. 设置优先级，使能中断，`HAL_NVIC_SetPriority()`,`HAL_NVIC_EnableIRQ()`
+5. 使能定时器更新中断，`__HAL_TIM_ENABLE_IT()__`
+6. 使能输出、主输出、计数器，`HAL_TIM_PWM_Start()`
+7. 编写中断服务函数，`TIMx_IRQHandler() -> HAL_TIM_IRQHandler()`
+8. 编写更新中断回调函数，`HAL_TIM_PeriodElapsedCallback()`
 
 
 

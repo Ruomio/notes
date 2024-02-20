@@ -17,6 +17,11 @@
 > mod + d 横向布局
 >
 > shift + alt + space 从悬浮小窗口切换到平铺
+>  
+>  
+### 补丁
+1. 系统托盘 systray
+2. 
 
 ### 从xsession启动 
 

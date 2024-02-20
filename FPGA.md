@@ -114,6 +114,40 @@ reg : 用于时序逻辑，当电路变化时，要等到下一个时钟才变�
 
 
 # IP核
+## CMT clock manager tiles
+1个CMT包含一个MMCM和1个PLL。
+
+### MMCM 
+
+### PPL锁相环
+```mermaid
+graph LR
+	A[ ] --> |F_in| B(N)
+	B --> |F_ref| C[PFD]
+	C --> D[Charge Pump / Loop Filter &VCO]
+	D --> J[F_vco]
+	J --> |M| C
+	J --> E[K]
+	E --> F[F_out1]
+	E --> G[F_out1]
+	J --> H[V]
+	H --> I[F_out2]
+
+```
+N：前置分频计数器  
+PFD：相位频率检测器  
+Charge Pump：电荷泵  
+Loop Filter：环路滤波器  
+VCO：压控振荡器  
+M：反馈乘法器  
+K,V：后置分频器
+
+#### 电路原理介绍：
+
+	首先Fin输入时钟，进入N预分频单元，出来的是FREF参考时钟，进入PFD频率相位检测电路，检测VCO反馈回来的时钟信号与参考时钟进行比较，然后将比较结果送入Charge，能得到一个电压信号，电压信号经过一个环路滤波器后，就是一个比较稳定的电压信号，这电压信号再来控制VCO压控振荡器，从来产生一个时钟信号Fvco，再次经过M的一个倍频，输入到PFD，这里就是一个环路反馈，不断调整达到一个平衡。当PFD=M就稳定下来，稳定下来之前需要一定时间。
+
+
+
 ## 单端口RAM
 输入只有一组数据线和一组地址线，只有一个时钟，读写共用地址线。
 
