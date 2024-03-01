@@ -69,7 +69,7 @@ lspci -k | grep -A 2 -E "(VGA|3D)"
 > xrandr --setprovideroutputsource modesetting NVIDIA-0
 > xrandr --auto
 > 
-> 
+> ```
 
 ## 切换回intel
 

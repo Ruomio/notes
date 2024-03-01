@@ -44,6 +44,86 @@ fseek()：重定位文件指针
 ```
 
 
+# 函数指针与回调函数
+## 函数指针
+```C
+// 普通函数声明
+int func(int a);
+// 函数指针初始化
+int (*p_func)(int) = func;
+// 函数指针调用
+p_func(5);              
+
+```
+
+```C
+#include <stdio.h>
+ 
+int max(int x, int y)
+{
+    return x > y ? x : y;
+}
+ 
+int main(void)
+{
+    /* p 是函数指针 */
+    int (* p)(int, int) = & max; // &可以省略
+    int a, b, c, d;
+ 
+    printf("请输入三个数字:");
+	scanf("%d %d %d", & a, & b, & c);
+ 
+    /* 与直接调用函数等价，d = max(max(a, b), c) */
+    d = p(p(a, b), c); 
+ 
+    printf("最大的数字是: %d\n", d);
+ 
+    return 0;
+}
+```
+
+## 回调函数 Callback Function
+函数指针变量可以作为某个函数的参数来使用的，回调函数就是一个通过函数指针调用的函数。
+
+简单讲：回调函数是由别人的函数执行时调用你实现的函数。
+
+回调函数通常是在特定的事件或条件发生时，由另外的一方调用的，用于对该事件或条件进行响应。其意义就在于解耦。
+```C
+int rfun_call(int (*pfun)(unsigned), unsigned x) 
+{ 
+	return pfun(x); 
+}
+
+```
+
+```C
+#include <stdlib.h>  
+#include <stdio.h>
+ 
+void populate_array(int *array, size_t arraySize, int (*getNextValue)(void))
+{
+    for (size_t i=0; i<arraySize; i++)
+        array[i] = getNextValue();
+}
+ 
+// 获取随机值
+int getNextRandomValue(void)
+{
+    return rand();
+}
+ 
+int main(void)
+{
+    int myarray[10];
+    /* getNextRandomValue 不能加括号，否则无法编译，因为加上括号之后相当于传入此参数时传入了 int , 而不是函数指针*/
+    populate_array(myarray, 10, getNextRandomValue);
+    for(int i = 0; i < 10; i++) {
+        printf("%d ", myarray[i]);
+    }
+    printf("\n");
+    return 0;
+}
+```
 
 ## I/O 多路复用
 
@@ -87,20 +167,102 @@ fseek()：重定位文件指针
 
 
 ## 动态静态链接库
+### 分类
+- 静态库(.a): 在链接期间被应用程序直接链接进可执行文件
+- 动态链接库(.so): 动态库还分为两种用法:
+	a) 应用程序运行期间链接动态库，但是在编译期间声明动态库的存在，也就是说这种动态库必须在编译时对编译器可见，但编译器却不将此种库编译进可执行文件;
+	
+	b) 在运行期间，动态加载和卸载的库，使用动态加载方法加载。这种库的形式跟动态链接没有本质区别，区别是在调用时，是由用户程序决定何时链接的，而不是由系统链接器自动链接
 
-> Windows : lib,dll
->
-> Linux:  .a, .so
+## 编译库
+```shell
+# 动态库
+gcc -shared -fPIC xxx.c -o libxxx.so
 
-## 调用
+# 静态库
+gcc -c xx.c -o xx.o  //生成math.o
+ar rc xx.a xx.o  //生成math.a
 
--L/path  静态库
+```
 
--l/path   静态库
+## 使用库
+```shell
+# libxxx.a
+g++  main.c -L. -lxxx -o main
+
+# libxxx.so
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
+g++ -o main main.c -I. -L. -lxxx -stacic
+```
+
 
 引入对应的头文件即可使用（相当于.a, .so 隐藏了具体实现）
 
-1. 静态调用
+**动态库使用方法**
+	动态链接库的使用需要库的开发者提供生成的.lib文件和.dll文件。或者只提供dll文件。使用时只能使用dll中导出的函数，未导出的函数只能在dll内部使用。
+	
+	Dll的调用有显示连接和隐式连接两种：隐式连接需要三个东西，分别是*.h头文件，lib库（动态的）， DLL库；显示连接只需要.dll文件即可。
+
+#### 显式(动态)加载
+
+这种方式通过调用[API函数](https://so.csdn.net/so/search?q=API%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020)来完成对DLL的加载与卸载，能更加有效地使用内存，在编写大型应用程序时往往采用此方式。
+
+**显式加载优点**
+
+- 灵活，可以在需要的时候用`LoadLibrary`进行加载，在不需要的时候用`FreeLibrary`进行卸载，这样可以不必占用内存。
+- 可以在没有dll时候发现，而不致程序报错。
+- 加载程序中有条件才运行的库。
+- 热更新，在不停止程序的前提下进行更新。
+
+**显式加载缺点**
+
+- 复杂一些，需要显示获得函数地址。
+- `dll`没有对应的`lib`文件，此时只能进行动态加载。
+
+**加载方法**
+
+- 使用Windows API函数Load Library将`DLL`模块映像到进程的内存空间，对`DLL`模块进行动态加载。
+- 使用`GetProcAddress`函数得到要调用`DLL`中的函数的指针。
+- 不用`DLL`时，用`FreeLibrary`函数或者`AfxFreeLibrary`函数从进程的地址空间显式卸载`DLL`。
+
+1. 动态(显式)调用，只需要`xxx.dll`
+**Windoiws环境**：
+```C++
+void DynamicUse()
+{
+    // 运行时加载DLL库,静态加载
+	HMODULE module = LoadLibrary("DLLTest1.dll");
+	if (module == NULL)
+	{
+		printf("加载DLLTest1.dll动态库失败\n");
+		return;
+	}
+	typedef int(*AddFunc)(int, int); // 定义函数指针类型
+	AddFunc add; 
+    // 导出函数地址
+	add = (AddFunc)GetProcAddress(module, "add");
+
+	int sum  = add(100, 200);
+	printf("动态调用，sum = %d\n",sum);
+}
+
+```
+
+**`linux`环境**: Linux中的`so`库**实现库的动态加载。最终链接时，使用**`-ldl`**。
+```C++
+#include <dlfcn.h>
+void *dlopen(const char *filename,int flag);
+char *dlerror(void);
+void *dlsym(void *handle,const char *symbol);
+int   dlclose(void *handle);
+ 
+Link with -ldl
+```
+**编译链接**
+`gcc dmain.c -ldl -o main`
+
+2. 静态(隐式)调用,还需要`xxx.h`
+**windows环境**:
 ```C++
 
 // 先将lib与dll导入项目
@@ -122,32 +284,30 @@ void StaticUse()
 
 ```
 
-2. 动态调用
-```C++
-void DynamicUse()
-{
-    // 运行时加载DLL库
-	HMODULE module = LoadLibrary("DLLTest1.dll");
-	if (module == NULL)
-	{
-		printf("加载DLLTest1.dll动态库失败\n");
-		return;
-	}
-	typedef int(*AddFunc)(int, int); // 定义函数指针类型
-	AddFunc add; 
-    // 导出函数地址
-	add = (AddFunc)GetProcAddress(module, "add");
-
-	int sum  = add(100, 200);
-	printf("动态调用，sum = %d\n",sum);
-}
-
+**`linux`环境**:
+设置`LD_LIBRARY_PATH` 参数指定路径，否则无法运行可执行程序
+`export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.` // .表示当前目录
+```shell
+gcc main.c -L./ -lmath -o main
 ```
 
 
+## 查看命令
+### nm命令
 
+有时候可能需要查看一个库中到底有哪些函数，**nm****命令**可以打印出库中的涉及到的所有符号。库既可以是静态的也可以是动态的。nm列出的符号有很多，常见的有三种：
 
+-  一种是在库中被调用，但并没有在库中定义(表明需要其他库支持)，用U表示；
 
+-  一种是库中定义的函数，用T表示，这是最常见的；
+
+-  一种是所谓的弱态"符号，它们虽然在库中被定义，但是可能被其他库中的同名符号覆盖，用W表示。
+
+`$nm libhello.a`
+
+### ldd命令
+
+**ldd****命令可以查看一个可执行程序依赖的共享库**，例如我们编写的四则运算动态库依赖下面这些库：
 
 
 

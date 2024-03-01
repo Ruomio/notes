@@ -394,6 +394,71 @@ MOE[15] 主输出使能。0: 进制OC和OCN输出
 7. 编写中断服务函数，`TIMx_IRQHandler() -> HAL_TIM_IRQHandler()`
 8. 编写更新中断回调函数，`HAL_TIM_PeriodElapsedCallback()`
 
+#### 带死区控制的互补输出
+因为电器既有一定的延迟特性，为避免断路，需要加一定的死区时间
+应用：
+	H桥: 控制电机正反转
+##### 死区时间计算
+1. 确定$t_{DTS}$ 的值   $f_{DTS} = \frac{F_t}{2^{CKD[1:0]}}$ 
+	CKD: 时钟分频因子，两位，可取值: 0,1,2
+2. 判断DTG[7:5] 选择计算公式
+	0xx ==> $DT = DTG[7:0] * T_{dtg}$ , $T_{dtg} = T_{DTS}$
+	10x ==> $DT = (64 + DTG[5:0]) * T_{dtg}$ , $T_{dtg} = T_{DTS} * 2$
+	110 ==> $DT = (32 + DTG[4:0]) * T_{dtg}$ , $T_{dtg} = T_{DTS} * 8$
+	111 ==> $DT = (32 + DTG[4:0]) * T_{dtg}$ , $T_{dtg} = T_{DTS} * 16$
+3. 带入选择的公式计算
+##### 刹车断路功能
+将TIMx_BDTR的BKE位置1，刹车输入信号极性由BKP位设置。
+无论何时，OCx和OCxN输出都不能同时处在有效电平
+发生刹车后:
+1. MOE被清零，OCx和OCxN为无效、空闲、或复位状态（OSSI位选择）
+2. OCx和OCxN状态由相关控制位状态决定：
+	当使用互补输出时：根据情况自动控制输出电平，参考手册
+3. BIF位置1，如果使能了BIE位，还会产生刹车中断，如果使能了TDE，会产生DMA请求。
+4. 如果AOE位置1，在下一个更新事件UEV时，MOE被自动置1。
+
+
+## MPU内存保护单元
+### 三种内存类型
+1. Normal memory: CPU以最高效的方式加载和存储字节，CPU对内存区的加载和存储不一定按照代码顺序执行。
+2. Device memory: 加载和存储都要按照顺序进行，确保寄存器按照正确顺序设置。
+3. Strongly ordered memory: 程序完全按照代码顺序执行，CPU等待当前加载存储完成才执行夏一条指令，导致性能下降。
+### Cache
+读cache
+	cache hit: 命中，直接读即可
+	cache miss :未命中，两种处理方式
+		read through: 直接从内存读出
+		read allocate: 先加载到cache，再读出。
+写cache
+    cache hit: 两种处理方式
+        write through: 直接写到内存中并同时放到cache，内存和cache同步
+        write back: 数据更新时只写入cache，只在数据被替换出cache时才写入内存。
+    cache miss: 两种处理方式
+        write allocate: 先把数据载入cache，再更新到内存
+        no write allocate: 直接写入内存，不使用cache
+
+
+
+## 存储器
+### RAM
+易失性，包括DRAM（SDRAM,DDR），和SRAM
+DRAM:
+    用电容的电量表示0和1, 电容漏电，需要刷新操作
+    SDRAM: 同步静态随机访问存储器
+SRAM:
+    使用触发器的稳定状态表示0和1.
+### ROM
+非易失性，PROM,EEPROM
+PROM:
+    只能操作一次，存放设备id和厂家信息。
+EEPROM:
+    可擦除，所以可以操作多次。经常用来保存掉电需要保存的数据
+### FLASH
+NOR FLASH:
+    以字节为单位，主要用于SPI FLASH,可以存放程序和直接执行
+    但容量较小
+NAND FLASH:
+    以块为单位,容量较大,不能存放程序
 
 
 # 构建HAL库工程（不使用cubemx）
@@ -424,15 +489,62 @@ MOE[15] 主输出使能。0: 进制OC和OCN输出
 
 
 
-# Arm-none-eabi-gcc
+# `Arm-none-eabi-gcc`
 
 ## 二进制复制
 
 `arm-none-eabi-objcopy -O binary xxx.elf xxx.bin`
 
+# 重定向`printf`函数
+## 重写系统调用
+`int _write(int file, char *ptr, int len)` 将串口打印或oled显示的实现放到次函数里。
+```C
+
+#define OLED
+#define USART
+
+int _write(int file, char* ptr, int len) {
+
+#ifdef OLED
+
+	OLED_NewFrame();
+	for(int i=0; i< len; i++) {
+		OLED_PrintASCIIChar(i*6, 0, ptr[i], &afont12x6, OLED_COLOR_NORMAL);
+	}
+	OLED_ShowFrame();
+#endif
 
 
-# PlatforIO
+#ifdef USART
+	for (int i = 0; i < len; i++)
+	{
+	
+		while((USART1->SR&0X40)==0);//等待上一次串口数据发送完成
+		
+		USART1->DR = (uint8_t) ptr[i]; //写DR,串口1将发送数据
+	}
+#endif
+	return 0;
+
+}
+```
+
+**缺点**: 无法使用 `%f,%e,%lld`等参数的打印
+
+**解决办法**: 将所需类型数据转换为字符串
+```C
+//无返回值的函数 
+void Float2Str(char* str,float value) { 
+	int Head = (int)value; 
+	int Point = (int)((value - Head)*1000.0); 
+	sprintf(str, "%d.%03d", Head, Point); 
+}
+
+// 不要使用malloc函数，容易造成内存碎片
+
+```
+
+# PlatformIO
 
 ## openocd权限问题
 
@@ -464,6 +576,23 @@ MOE[15] 主输出使能。0: 进制OC和OCN输出
 
 `ctrl_A Z`菜单
 
+## 固定usb设备名称
+查看详细信息
+`udevadm info -a -n /dev/ttyUSB0`
+查看U转串芯片详细信息
+KERNELS：设备路径名
+ATTR / ATTRS：设备的属性，如idProduct/idVendor（按U转串设备固定名称）
+SUBSYSTEMS：设备类型
+
+用户自定义规则存放在/etc/udev/rules.d/，以rules为扩展名
+样例：
+```txt
+KERNEL=="ttyUSB*", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="0777", SYMLINK+="serial_port"
+
+KERNELS=="1-7.3:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="agvcode"
+KERNELS=="1-7.2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="novatel"
+KERNELS=="1-2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="lpms"
+```
 
 # ARM 汇编
 ## 寄存器
