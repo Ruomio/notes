@@ -487,7 +487,11 @@ NAND FLASH:
 
 > st-flash write xxx.bin 0x8000000
 
-
+## 修复
+1. 按住开发板的 RESET 键之后, 执行下面的命令
+	`st-info --probe  --connect-under-reset`
+2.  按住 RESET 键后执行下面的命令
+	`st-flash erase  --connect-under-reset
 
 # `Arm-none-eabi-gcc`
 
@@ -576,6 +580,9 @@ void Float2Str(char* str,float value) {
 
 `ctrl_A Z`菜单
 
+`crtl_M` : '\r' 回车符 （0D）
+`crtl_J` : ‘\n’ 换行符  （0A）
+
 ## 固定usb设备名称
 查看详细信息
 `udevadm info -a -n /dev/ttyUSB0`
@@ -593,6 +600,9 @@ KERNELS=="1-7.3:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="agvcode"
 KERNELS=="1-7.2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="novatel"
 KERNELS=="1-2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="lpms"
 ```
+
+
+
 
 # ARM 汇编
 ## 寄存器
