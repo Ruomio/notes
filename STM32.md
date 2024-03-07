@@ -617,3 +617,55 @@ KERNELS=="1-2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="lpms"
 > LR 链接寄存器，存储子程序返回地址
 > PC 程序计数器
 > APSR/CPSR 应用程序状态寄存器/当前程序状态寄存器
+
+
+
+# ESP AT
+## WIFI 指令
+
+## MQTT 指令
+### AT+MQTTUSERCFG：设置 MQTT 用户属性
+`AT+MQTTUSERCFG=<LinkID>,<scheme>,<"client_id">,<"username">,<"password">,<cert_key_ID>,<CA_ID>,<"path">`
+##### 参数
+    <LinkID>：当前仅支持 link ID 0。
+    <scheme>:
+        1: MQTT over TCP；
+
+        2: MQTT over TLS（不校验证书）；
+
+        3: MQTT over TLS（校验 server 证书）；
+
+        4: MQTT over TLS（提供 client 证书）；
+
+        5: MQTT over TLS（校验 server 证书并且提供 client 证书）；
+
+        6: MQTT over WebSocket（基于 TCP）；
+
+        7: MQTT over WebSocket Secure（基于 TLS，不校验证书）；
+
+        8: MQTT over WebSocket Secure（基于 TLS，校验 server 证书）；
+
+        9: MQTT over WebSocket Secure（基于 TLS，提供 client 证书）；
+
+        10: MQTT over WebSocket Secure（基于 TLS，校验 server 证书并且提供 client 证书）。
+
+    <client_id>：MQTT 客户端 ID，最大长度：256 字节。
+
+    <username>：用户名，用于登陆 MQTT broker，最大长度：64 字节。
+
+    <password>：密码，用于登陆 MQTT broker，最大长度：64 字节。
+
+    <cert_key_ID>：证书 ID，目前 ESP-AT 仅支持一套 cert 证书，参数为 0。
+
+    <CA_ID>：CA ID，目前 ESP-AT 仅支持一套 CA 证书，参数为 0。
+
+    <path>：资源路径，最大长度：32 字节。
+
+### AT+MQTTLONGCLIENTID：设置 MQTT 客户端 ID
+#### 参数
+AT+MQTTLONGCLIENTID=<LinkID>,<length>
+
+
+AT+MQTTUSERCFG=0,1,"1","papillon","991213",0,0,""
+AT+MQTTCONNCFG=0,60,0,"dead","conn_dead",0,0
+AT+MQTTCONN=0,"8.146.199.13",1883,0

@@ -43,7 +43,39 @@ fseek()：重定位文件指针
     void matrix_mutifly(int (*A)[10], int (*B)[10], int (*C)[10]){}
 ```
 
+## 编译指令
+### `__attritube__`
+设置编译属性，例如:
+- `__attribute__((packed))`：以紧凑的方式对齐结构体或变量，减小内存占用。
+- `__attribute__((aligned(n)))`：将结构体或变量对齐到指定的字节边界。
+- `__attribute__((noreturn))`：用于表示函数不会返回，例如在函数内部调用 `exit()` 或执行无限循环。
+- `__attribute__((unused))`：用于消除未使用变量的编译警告。
+### `__weak`
+弱定义，正常不带此修饰符为强定义
+多强报错，弱强用强，多弱用占内存最大的
 
+
+## 宏定义
+### offsetof宏
+```C
+#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
+```
+
+(1)offsetof宏的作用是：用宏来计算结构体中某个元素和结构体首地址的偏移量（其实质是通过编译器来帮我们计算）。
+
+(2)offsetof宏的原理：我们虚拟一个type类型结构体变量，然后用type.member的方式来访问那个member元素，继而得到member相对于整个变量首地址的偏移量。
+
+### container_of宏
+```C
+ #define container_of(ptr, type, member) ({   \
+     const typeof( ((type *)0)->member ) *__mptr = (ptr); \
+     (type *)( (char *)__mptr - offsetof(type,member) );})
+
+```
+
+知道一个结构体中某个元素的指针，反推这个结构体变量的指针。有了container_of宏，我们可以从一个元素的指针得到整个结构体变量的指针，继而得到结构体中其他元素的指针。
+
+### 
 # 函数指针与回调函数
 ## 函数指针
 ```C
