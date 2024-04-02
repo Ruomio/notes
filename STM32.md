@@ -418,7 +418,121 @@ MOE[15] 主输出使能。0: 进制OC和OCN输出
 4. 如果AOE位置1，在下一个更新事件UEV时，MOE被自动置1。
 
 
+
+
+
+## IIC
+
+起始信号：CLK高电平期间，SDA从高电平拉低电平
+
+停止信号：CLK高电平期间，SDA从低电平拉高电平
+
+在 [ 起始信号，停止信号 ] 的区间，都属于非空闲状态
+
+以字节为单位，其中地址帧有七位`bit[7:1]`从机地址和一位读写控制位`bit[0]`, 其中 `1: 读；0: 写`
+
+然后等待应答，NCK：应答 用0表示； NACK：非应答 用1表示
+
+继续下一字节，一直重复，直到停止信号。
+
+
+
+## SCCB
+
+串行摄像头控制总线
+
+与iic相似，SIO_C: SCL, SIO_D: SDA, ID addr都由7位地址+1位读写控制位（0:写 ; 1:读）
+
+不支持连续读写
+
+开始和停止信号和iic相同，时钟线为高时数据稳定有效
+
+差异点：第九周期不同，sccb的SIO_D为`NA(1有效)`或`don't care(不关心高低电平)`信号。而iic是等待应答
+
+NA: SIO_D高电平期间，SIO_C从高电平到低电平。
+
+sccb的传输单位为相
+
+### 写操作
+
+3相写传输周期
+
+start | ID addr | x | Sub addr | x | Write data | x | stop
+
+
+
+### 读操作
+
+2相写，2相读共同组成读周期
+
+start | ID addr | x | Sub addr | x | stop;   start | ID addr | x | Read data | NA | stop
+
+
+
+
+
+## SPI
+
+MISO：主输入从输出
+
+MOSI：主输出从输入
+
+CS：片选信号拉低有效
+
+CLK：时钟同步
+
+四种工作没事，要设置和从机工作没事一致。
+
+全双工，但没有应答机制，数据是否收到不能保证。
+
+
+
+## CAN
+
+差分信号：高（一条线3.5V，另一条1.5V）； 低（两条线都为2.5V）
+
+起始位：1位 0
+
+识别码：11位
+
+RTR位：1位，表示数据帧（为0）或远程请求帧（为1）
+
+控制码：6位
+
++ IDE位 bit 1: 区分标准格式和拓展格式，0:标准格式，表示11位识别码；1:拓展格式，表示29位识别码
++ 空闲位 bit 1
++ DLC bit 4 : 数据长度代码
+
+CRC码：16位，循环冗余校验位。
+
+- 15位CRC
+- 1位CRC界定符（为1，表示CRC结束）
+
+ACK码：2位。
+
+- bit1 :发送端为1, 接受端回复为0，表示收到数据
+- bit 1: ACK界定符，为1，表示ACK结束
+
+结束位：7位，全为1，表示结束
+
+
+
+当总线同时出现逻辑1和逻辑0时，总线为逻辑0，也就是说当两个设备同时发送数据时，识别码更低的有效（即识别码越小，优先级越高）
+
+
+
+
+
+## OV7670
+
+地址：0x42
+
+
+
+
+
 ## MPU内存保护单元
+
 ### 三种内存类型
 1. Normal memory: CPU以最高效的方式加载和存储字节，CPU对内存区的加载和存储不一定按照代码顺序执行。
 2. Device memory: 加载和存储都要按照顺序进行，确保寄存器按照正确顺序设置。
@@ -459,6 +573,14 @@ NOR FLASH:
     但容量较小
 NAND FLASH:
     以块为单位,容量较大,不能存放程序
+
+
+## 低功耗模式
+一共有运行，睡眠，停止，待机四种模式
+睡眠：停止内核时钟，电压调节器和时钟系统正常运行
+停止：整个时钟系统停止，但保留电压调节器,程序不会复位，恢复时间长
+待机：时钟系统和电压调节器都停止，程序会复位
+
 
 
 # 构建HAL库工程（不使用cubemx）
@@ -630,35 +752,35 @@ KERNELS=="1-2:1.0", MODE:="0777", GROUP:="dialout", SYMLINK+="lpms"
     <LinkID>：当前仅支持 link ID 0。
     <scheme>:
         1: MQTT over TCP；
-
+    
         2: MQTT over TLS（不校验证书）；
-
+    
         3: MQTT over TLS（校验 server 证书）；
-
+    
         4: MQTT over TLS（提供 client 证书）；
-
+    
         5: MQTT over TLS（校验 server 证书并且提供 client 证书）；
-
+    
         6: MQTT over WebSocket（基于 TCP）；
-
+    
         7: MQTT over WebSocket Secure（基于 TLS，不校验证书）；
-
+    
         8: MQTT over WebSocket Secure（基于 TLS，校验 server 证书）；
-
+    
         9: MQTT over WebSocket Secure（基于 TLS，提供 client 证书）；
-
+    
         10: MQTT over WebSocket Secure（基于 TLS，校验 server 证书并且提供 client 证书）。
-
+    
     <client_id>：MQTT 客户端 ID，最大长度：256 字节。
-
+    
     <username>：用户名，用于登陆 MQTT broker，最大长度：64 字节。
-
+    
     <password>：密码，用于登陆 MQTT broker，最大长度：64 字节。
-
+    
     <cert_key_ID>：证书 ID，目前 ESP-AT 仅支持一套 cert 证书，参数为 0。
-
+    
     <CA_ID>：CA ID，目前 ESP-AT 仅支持一套 CA 证书，参数为 0。
-
+    
     <path>：资源路径，最大长度：32 字节。
 
 ### AT+MQTTLONGCLIENTID：设置 MQTT 客户端 ID
@@ -669,3 +791,6 @@ AT+MQTTLONGCLIENTID=<LinkID>,<length>
 AT+MQTTUSERCFG=0,1,"1","papillon","991213",0,0,""
 AT+MQTTCONNCFG=0,60,0,"dead","conn_dead",0,0
 AT+MQTTCONN=0,"8.146.199.13",1883,0
+
+
+
