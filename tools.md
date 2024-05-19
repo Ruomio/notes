@@ -340,26 +340,21 @@ tar e *.tar 解压文件到同级目录
 ## demo
 ```Makefile
 CC = clang
-
 SRC = $(wildcard *.c)
-
 DEP = $(wildcard *.h)
+OBJS = $(patsubst %.c,%.o,$(SRC))
+TAR = syn
 
-OBJS = $(patsubset %.c,%.o,$(SRC))
-
-ALL : syn
-
-syn : synA.o synB.o
-
+ALL : $(TAR)
+$(TAR) : $(OBJS)
 	$(CC) $^ -o $@
 
 %.o : %.c $(DEP)
-
 	$(CC) -c $< -o $@
 
 .PHONY : clean
 clean :
-	rm *.o syn
+	rm $(OBJS) $(TAR)
 ```
 ## clean
 
