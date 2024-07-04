@@ -535,6 +535,22 @@ ln -snf 【新目标目录】 【软链接地址】
 
 >pacman -S --overwrite '*' 要覆盖的文件模式**
 
+
+
+## pacman接管pip
+
+    To install Python packages system-wide, try 'pacman -S
+        python-xyz', where xyz is the package you are trying to
+        install.
+    If you wish to install a non-Arch-packaged Python package,
+    create a virtual environment using 'python -m venv path/to/venv'.
+    Then use path/to/venv/bin/python and path/to/venv/bin/pip.
+    
+    If you wish to install a non-Arch packaged Python application,
+    it may be easiest to use 'pipx install xyz', which will manage a
+    virtual environment for you. Make sure you have python-pipx
+    installed via pacman.
+
 ## 在 Arch Linux 上安装 Debtap
 
 >要安装 Debtap，启动终端并使用 AUR 助手安装它：
@@ -663,3 +679,24 @@ sudo umount rootfs
 `qemu-system-aarch64 -M virt -cpu cortex-a57 -m 256M -nographic -kernel ../linux-6.7/arch/arm64/boot/Image -drive file=rootfs.img,format=raw,id=hd0,if=none -device virtio-blk-device,drive=hd0 -append "root=/dev/vda rw console=ttyAMA0"
 `
 ## 虚拟机和宿主机通讯
+
+
+
+
+
+
+
+# waydroid模拟器
+
+```shell
+sudo systemctl start waydroid-container.service
+
+waydroid session start
+
+waydroid show-full-ui
+
+waydroid app install $path_to_apk
+
+waydroid app launch $package_name # Can be retrieved with `waydroid app list`
+```
+

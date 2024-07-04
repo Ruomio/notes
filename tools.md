@@ -361,6 +361,12 @@ clean :
 > **make** clean 清除之前编译的可执行文件及配置文件。
 > **make** **distclean** 清除所有生成的文件。
 
+
+
+## bear make
+
+生成commond.json 用于clangd智能提示
+
 # hexo
 
 ##  命令
@@ -1130,3 +1136,12 @@ clang++ -c file.cc -v 编译将打印出其他内容:
 使用光标键移动光标来选择文本块。
 按下 > 进行向右缩进，或按下 < 进行向左反缩进。
 
+
+
+
+
+# python
+
+## 创建虚拟环境
+
+> python -m venv ./venv
