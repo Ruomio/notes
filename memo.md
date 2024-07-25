@@ -18,7 +18,16 @@
 
 
 
+Linux freezes resons:
 
+>1. network controller : 10%
+>2. linuxqq : 60%
+>3. fcitx5: 10%
+>4. hyprland and dwm both freezes: So not wayland protocol
+>5. chrome 硬件加速 ：50%
+>6. nvim: 40%
+>
+>
 
 
 

@@ -340,8 +340,8 @@ tar e *.tar 解压文件到同级目录
 ## demo
 ```Makefile
 CC = clang
-SRC = $(wildcard *.c)
-DEP = $(wildcard *.h)
+SRC = $(wildcard *.c) # $(shell ls *.c)
+DEP = $(wildcard *.h) # $(shell ls *.h)
 OBJS = $(patsubst %.c,%.o,$(SRC))
 TAR = syn
 
@@ -356,6 +356,78 @@ $(TAR) : $(OBJS)
 clean :
 	rm $(OBJS) $(TAR)
 ```
+* 编译库的Makefile模板
+
+```makefile
+CC = gcc
+
+# export ROOT_DIR = /home/papillon/Documents/All_codes/RISCV_demo/tmp/listnode
+ROOT_DIR = /home/papillon/Documents/All_codes/RISCV_demo/tmp/listnode
+SRC_DIR = $(ROOT_DIR)/src
+LIB_DIR = $(SRC_DIR)/lib
+BUILD_DIR = $(ROOT_DIR)/build
+
+CFLAGS += -Wall -g  -fPIC -I$(LIB_DIR) 
+
+LIB_A = liblist.a
+LIB_SO = liblist.so
+
+SRC = $(shell ls $(SRC_DIR)/*.c) 
+LIB = $(shell ls $(LIB_DIR)/*.c) 
+# INC = $(shell ls src/*.h)
+
+OBJ = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRC))
+LIB_OBJ = $(patsubst $(LIB_DIR)/%.c,$(BUILD_DIR)/lib/%.o,$(LIB))
+
+
+TAR-TEST-so = test-so
+TAR-TEST-a = test-a
+
+
+all : $(BUILD_DIR) $(BUILD_DIR)/$(TAR-TEST-a) $(BUILD_DIR)/$(TAR-TEST-so)
+
+$(BUILD_DIR) :
+	mkdir -p $(BUILD_DIR)
+	mkdir -p $(BUILD_DIR)/lib
+
+$(BUILD_DIR)/$(TAR-TEST-a) : $(OBJ) $(BUILD_DIR)/$(LIB_A)
+	$(CC) $(CFLAGS) -o $@ $^ -L$(BUILD_DIR) -llist -static
+
+$(BUILD_DIR)/$(TAR-TEST-so) : $(OBJ) $(BUILD_DIR)/$(LIB_SO)
+	$(CC) $(CFLAGS) -o $@ $^ -L$(BUILD_DIR) -llist
+	export LD_LIBRARY_PATH=$(LD_LIBRARY_PATH):$(BUILD_DIR)
+
+$(BUILD_DIR)/$(LIB_A) : $(LIB_OBJ)
+	ar rcs $@ $^
+	ranlib $@
+
+$(BUILD_DIR)/$(LIB_SO) : $(LIB_OBJ)
+	$(CC) $(CFLAGS) -shared -o $@ $^
+
+
+
+
+$(BUILD_DIR)/%.o : $(SRC_DIR)/%.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/lib/%.o : $(LIB_DIR)/%.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
+echo :
+	echo $(LIB_DIR)
+	echo $(LIB)
+	echo $(SRC)
+.PHONY : clean ALL
+clean :
+	rm -rf $(BUILD_DIR)
+
+```
+
+
+
+
+
 ## clean
 
 > **make** clean 清除之前编译的可执行文件及配置文件。
