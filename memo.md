@@ -18,7 +18,7 @@
 
 
 
-Linux freezes resons:
+Linux freezes resons: 键盘灯闪烁
 
 >1. network controller : 10%
 >2. linuxqq : 60%
@@ -26,7 +26,12 @@ Linux freezes resons:
 >4. hyprland and dwm both freezes: So not wayland protocol
 >5. chrome 硬件加速 ：50%
 >6. nvim: 40%
->
+>7. 内存需降频说
+>    acpi 冲突（nForce 芯片与内核）说
+>      超频说
+>8. 静电问题：电源适配器没有接地。释放静电后明显死机次数减少
+>9. 启动参数改变：增加 idle=nomwait   pci=nomsi
+>10. ==蓝牙关闭后情况消失==
 >
 
 
